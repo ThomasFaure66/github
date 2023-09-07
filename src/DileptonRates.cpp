@@ -201,7 +201,7 @@ namespace DileptonRates{
         Jacobian*=Tau*(TauMax-TauMin)*Area/(M_HBARC*M_HBARC*M_HBARC*M_HBARC);
 
         double T,wTilde,e,pL,eQOvereG;
-        GetValues(dNchdEta,Area,eta_over_s,Tau,T,wTilde,e,pL,eQOvereG);
+        HydroAttractor::GetValues(dNchdEta,Area,eta_over_s,Tau,T,wTilde,e,pL,eQOvereG);
 
         // CALCULATE DILEPTON PRODUCTION dN/dydQd2qT FOR ALL BINS //
 
