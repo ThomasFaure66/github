@@ -133,6 +133,63 @@ namespace DileptonRates{
         
     }
     
+    // SAMPLE DILPETON PRODUCTION -- QSqr INVARIANT MASS SQUARE, qT TRANSVERSE MOMENTUM , EtaQ RAPIDITY OF DILEPTON PAIR //
+    void SampleqT(double QMin,double QMax,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double &dN,double &dNPreEq,double &dNHydro){
+        
+        // SAMPLE INTEGRATION POINT //
+        double Jacobian=1.0;
+        
+        double EtaMin=-8+EtaQ;
+        double EtaMax=8+EtaQ;
+        double EtaX=EtaMin+(EtaMax-EtaMin)*rng();
+        double PhiQ=2.0*M_PI*rng();
+        
+        double Q=QMin+(QMax-QMin)*rng();
+        double QSqr=Q*Q;
+        
+        
+        // ENERGY AND MOMENTUM OF DILEPTON PAIR //
+        double qZ=std::sqrt(QSqr+qT*qT)*sinh(EtaQ);
+        double qAbs=std::sqrt(qT*qT+(QSqr+qT*qT)*sinh(EtaQ)*sinh(EtaQ));
+        double q0=std::sqrt(QSqr+qAbs*qAbs);
+        
+        // PSEUDO-RAPIDITY OF DILEPTON PAIR //
+        double yQ=atanh(qZ/qAbs);
+        
+        // JACOBIAN  -- d^4Q=QdQ dy d^2qT //
+        Jacobian*=2.0*M_PI*(EtaMax-EtaMin)*qT*Q;
+        
+        // EVOLUTION TIME //
+        double Tau=TauMin+(TauMax-TauMin)*rng();
+        
+        Jacobian*=Tau*(TauMax-TauMin)*Area/(M_HBARC*M_HBARC*M_HBARC*M_HBARC);
+        
+        // GET EVOLUTION OF MACROSCOPIC FIELDS //
+        double T,wTilde,e,pL,eQOvereG;
+        HydroAttractor::GetValues(dNchdEta,Area,etas,Tau,T,wTilde,e,pL,eQOvereG);
+        
+        // GET PARAMETERS OF PHASE-SPACE DISTRIBUTION //
+        double Xi,Teff,qSupp;
+        PhaseSpaceDistribution::GetPhaseSpaceDistributionParameters(e,pL,eQOvereG,Xi,Teff,qSupp);
+        
+        // SAMPLE DILEPTON PRODUCTION //
+        double PreFactor=alphaEM*alphaEM/(6.0*M_PI*M_PI*M_PI*QSqr)*(1.0+mllSqr/QSqr)*sqrt(1.0-4.0*mllSqr/QSqr)*qFSqrSum;
+        double dNlld4xd4Q=PreFactor*SampleTracePi(q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp);
+        
+        // GET PRODUCTION YIELD //
+        dN=Jacobian*dNlld4xd4Q;
+        
+        // SEPARATE INTO PRE-EQ AND HYDRO //
+        if(wTilde<1.0){
+            dNPreEq=dN; dNHydro=0.0;
+        }
+        else{
+            dNPreEq=0.0; dNHydro=dN;
+        }
+        
+        
+    }
+    
     
     // SAMPLE DILPETON PRODUCTION -- Q INVARIANT MASS, qT TRANSVERSE MOMENTUM , EtaQ RAPIDITY OF DILEPTON PAIR //
     void SampledNdy(double QMin,double QMax,double qTMin,double qTMax,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double &dN,double &dNPreEq,double &dNHydro){
