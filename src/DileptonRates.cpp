@@ -197,6 +197,9 @@ namespace DileptonRates{
         // SAMPLE INTEGRATION POINT //
         double Jacobian=1.0;
         
+        double EtaMin=-8+EtaQ;
+        double EtaMax=8+EtaQ;
+        double EtaX=EtaMin+(EtaMax-EtaMin)*rng();
         double qT=qTMin+(qTMax-qTMin)*rng();
         double PhiQ=2.0*M_PI*rng();
         
@@ -204,7 +207,7 @@ namespace DileptonRates{
         double QSqr=Q*Q;
         
         // JACOBIAN  -- d^4Q=QdQ dy d^2qT //
-        Jacobian*=2.0*M_PI*(qTMax-qTMin)*(QMax-QMin)*qT*Q;
+        Jacobian*=2.0*M_PI*(qTMax-qTMin)*(EtaMax-EtaMin)*(QMax-QMin)*qT*Q;
         
         // ENERGY AND MOMENTUM OF DILEPTON PAIR //
         double qZ=std::sqrt(QSqr+qT*qT)*sinh(EtaQ);
@@ -229,7 +232,7 @@ namespace DileptonRates{
         
         // SAMPLE DILEPTON PRODUCTION //
         double PreFactor=alphaEM*alphaEM/(6.0*M_PI*M_PI*M_PI*QSqr)*(1.0+mllSqr/QSqr)*sqrt(1.0-4.0*mllSqr/QSqr)*qFSqrSum;
-        double dNlld4xd4Q=PreFactor*SampleTracePi(q0,qT,PhiQ,yQ,EtaQ,Xi,Teff,qSupp);
+        double dNlld4xd4Q=PreFactor*SampleTracePi(q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp);
         
         // GET PRODUCTION YIELD //
         dN=Jacobian*dNlld4xd4Q;
