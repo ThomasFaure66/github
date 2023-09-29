@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/DileptonProduction/src/dNdy.csv");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/DileptonProduction/src/dNdy.csv");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
