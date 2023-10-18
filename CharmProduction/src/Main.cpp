@@ -46,7 +46,7 @@ double rng(){
 
 #include "HydroAttractor.cpp"
 #include "PhaseSpaceDistribution.cpp"
-#include "DileptonRates.cpp"
+#include "CharmRates.cpp"
 
 
 // COMMANDLINE OPTIONS //
@@ -60,7 +60,7 @@ int main(int argc, char* argv[]) {
 
 //  //  // SAVE DNDY values
 //      char filexsec[6000];
-//      sprintf(filexsec,"/home/tf275865/Bureau/DileptonProduction/src/dNdy.csv");
+//      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/DileptonProduction/src/dNdy.csv");
 //      ifstream dataFile(filexsec);
 //      int counter = 0;
 //      string line;
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
     CommandlineArguments.Getval("area",Area);
     CommandlineArguments.Getval("Q",QUARK_SUPPRESSION);
     
-    std::cerr << "#CALCULATING DILEPTON PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << std::endl;
+    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << std::endl;
     
     
     // DILEPTON PARAMTERS //
@@ -277,24 +277,22 @@ int main(int argc, char* argv[]) {
             double dNlldQdY=0.0;
             double dNlldQdYPreEq=0.0;
             double dNlldQdYHydro=0.0;
-            double sigmat=0.0;
-            double test1a=0.0;
+
             for(int i=0;i<NSamples;i++){
                 
-                double dN,dNPreEq,dNHydro,sigmatilde, test1t;
-                DileptonRates::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro,sigmatilde, test1t);
-                dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro; sigmat+=sigmatilde; test1a+=test1t;
+                double dN,dNPreEq,dNHydro;
+                CharmRates::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro);
+                dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro;
     
             }
             dNlldQdY/=double(NSamples);
             dNlldQdYPreEq/=double(NSamples);
             dNlldQdYHydro/=double(NSamples);
-            sigmat/=double(NSamples);
-            test1a/=double(NSamples);
+
 
     
     
-            std::cout << Q << " " << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro << " " << sigmat << " " << test1a << std::endl;
+            std::cout << Q << " " << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro << std::endl;
     
         }
   
