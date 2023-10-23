@@ -15,7 +15,7 @@
 using namespace std;
 double alphaEM=1.0/137.0; double mllSqr=0.0; double qFSqrSum=1.0/9.0+4.0/9.0+1.0/9.0;
 
-int QUARK_SUPPRESSION=0;
+int QUARK_SUPPRESSION=1;
 
 double Nc=3.0;
 double Nf=3.0;
@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
     
     
     // DILEPTON PARAMTERS //
-    double QMin=3.1; double QMax=8;
+    double QMin=3; double QMax=12;
 
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);

@@ -47,9 +47,9 @@ namespace CharmRates_qq{
         
         double CosThetaPQ=(qAbs*qAbs+2.0*pAbs*q0-q0*q0)/(2.0*pAbs*qAbs);
 //        if(CosThetaPQ > 1.0){
-        	if(CosThetaPQ >1.1){
-        		cout << "Fail" << endl;
-        		exit(EXIT_FAILURE);}
+//       	if(CosThetaPQ >1.1){
+//        		cout << "Fail" << endl;
+//        		exit(EXIT_FAILURE);}
 //        	CosThetaPQ = 1.0;}
         double SinThetaPQ=sqrt(1.0-CosThetaPQ*CosThetaPQ);
         
@@ -79,6 +79,7 @@ namespace CharmRates_qq{
         //double E = pAbs+sqrt(pAbs*pAbs+qAbs*qAbs-2*pAbs*qAbs*CosThetaPQ);
         double v = sqrt(1.0-(4.0*m*m)/(Q*Q));
         double alphas  = 0.3;
+//	double alphas = 1.0/137.0;
 //        double sigma=((M_PI*alphas*alphas)/(2.0*Q*Q))*(((11.0/4.0)-(3.0/2.0)*v*v+(1.0/12.0)*v*v*v*v)*atanh(v)-(v/24.0)*(59.0-31.0*v*v));
        double sigma= ((4.0*M_PI*alphas*alphas)/(9.0*Q*Q))*v*(1.0-(v*v)/3.0);
 //	double sigma =((2.0*4.0*M_PI*alphas*alphas)/(3.0*9.0*Q*Q));

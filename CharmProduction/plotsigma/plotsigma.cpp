@@ -18,13 +18,13 @@ using namespace std;
 int main(){
 
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/test/sigma.csv");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/plotsigma/sigmagood.csv");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[33];
-      double dNdy[33];
+      double y[34];
+      double dNdy[34];
 
       int j = 0;
 

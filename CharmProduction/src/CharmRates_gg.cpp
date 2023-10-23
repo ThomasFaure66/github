@@ -46,9 +46,9 @@ namespace CharmRates_gg{
         
         double CosThetaPQ=(qAbs)/(2.0*pAbs)+(2.0*pAbs*q0)/(2.0*pAbs*qAbs)-(q0*q0)/(2.0*pAbs*qAbs);
 //        if(CosThetaPQ > 1.0){
-        	if(CosThetaPQ >1.1){
-        		cout << "Fail" << endl;
-        		exit(EXIT_FAILURE);}
+//        	if(CosThetaPQ >1.1){
+//        		cout << "Fail" << endl;
+//        		exit(EXIT_FAILURE);}
 //        	CosThetaPQ = 1.0;}
         double SinThetaPQ=sqrt(1.0-CosThetaPQ*CosThetaPQ);
         
