@@ -20,13 +20,13 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_qq_mQ1.5_qSupp0_NSamples300000_QMin3_QMax12_etaovers0.16.txt");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_qq_mQ0_alphaEM_qSupp0_NSamples300000_QMin3_QMax12_etaovers0.16.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
       double y[67];
-      double qq[67];
+      double gg[67];
       int j = 0;
   
   
@@ -45,17 +45,17 @@ int main() {
      }
       while(j<67){
  	      y[j] = all[j*5];
- 	      qq[j] = all[j*5+2];
+ 	      gg[j] = all[j*5+2];
  	      j++;
 	      }
 		
 	char filexsec2[6000];
-      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_gg_mQ1.5_qSupp0_NSamples1000000_QMin3_QMax12_etaovers0.16.txt");
+      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dDileptondy_qSupp1_NSamples300000_QMin3_QMax12_etaovers0.16.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
       double all2[600];
-      double gg[67];
+      double sigma[67];
       int k = 0;
   
   
@@ -73,10 +73,10 @@ int main() {
   	  }
      }
       while(k<67){
- 	      gg[k] = all[k*5+2];
+ 	      sigma[k] = all[k*5+2];
  	      k++;
 	      }
       for(int h = 0; h<67;h++){
-      	double rapport = gg[h]/qq[h];
+      	double rapport = gg[h]/sigma[h];
       	cout <<y[h] << " " << rapport << endl;}
 		}

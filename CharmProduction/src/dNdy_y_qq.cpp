@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
 		l++;}
  
  // COLLISION PARAMETERS //
-    double EtaOverS=0.16; double Area=110;
+    double EtaOverS=0.32; double Area=110;
     
   	 
     CommandlineArguments.Getval("etas",EtaOverS);

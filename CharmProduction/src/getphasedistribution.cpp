@@ -46,8 +46,8 @@ double rng(){
 
 #include "HydroAttractor.cpp"
 #include "PhaseSpaceDistribution.cpp"
-#include "CharmRates_qq.cpp"
-#include "CharmRates_gg.cpp"
+#include "Phasedistributiongluons.cpp"
+#include "Phasedistributionquarks.cpp"
 
 
 // COMMANDLINE OPTIONS //
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     Konfig CommandlineArguments(argc,argv);
     
     // COLLISION PARAMETERS //
-    double EtaOverS=0.16 ; double Area=110;
+    double EtaOverS=0.32 ; double Area=110;
     
   	 
     CommandlineArguments.Getval("etas",EtaOverS);
@@ -70,7 +70,7 @@ int main(int argc, char* argv[]) {
     
     
     // DILEPTON PARAMTERS //
-    double QMin=3.001; double QMax=30;
+    double QMin=3.00; double QMax=12;
 
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
@@ -108,31 +108,24 @@ int main(int argc, char* argv[]) {
         
         for(int iQ=0;iQ<NQ;iQ++){
     
-            double Q=QMin+iQ*(QMax-QMin)/double(NQ-1);
+            double Tau=TauMin+iQ*(TauMax-TauMin)/double(NQ-1);
     //	cout << "Q : " << Q << endl;
     
             double dNlldQdY=0.0;
-            double dNlldQdYPreEq=0.0;
-            double dNlldQdYHydro=0.0;
-            double testo = 0.0;
 
             for(int i=0;i<NSamples;i++){
                 
-                double dN,dNPreEq,dNHydro, test;
-                CharmRates_gg::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro, test);
-                dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro; testo+=test;
+                double dN;
+                Phasedistributionquarks::PDqq(QMin, QMax,qTMin,qTMax,Tau,yQ,dNchdEta,Area,EtaOverS,dN);
+                dNlldQdY+=dN;
                 
 
             }
             dNlldQdY/=double(NSamples);
-            dNlldQdYPreEq/=double(NSamples);
-            dNlldQdYHydro/=double(NSamples);
-            testo/=double(NSamples);
-            
 
+               
     
-    
-            std::cout << Q  << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro ;
+            std::cout << Tau  << " " << dNlldQdY;
 
     		cout << endl;
         }
