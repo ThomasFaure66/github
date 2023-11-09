@@ -59,14 +59,14 @@ int main(int argc, char* argv[]) {
     Konfig CommandlineArguments(argc,argv);
     
     // COLLISION PARAMETERS //
-    double EtaOverS=0.16 ; double Area=110;
+    double EtaOverS=0.16 ; double Area=110;double MQ=1.5;
     
-  	 
+    CommandlineArguments.Getval("M",MQ);
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
     CommandlineArguments.Getval("Q",QUARK_SUPPRESSION);
     
-    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << std::endl;
+    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION <<  " Quark mass " << MQ << std::endl;
     
     
     // DILEPTON PARAMTERS //
@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
             for(int i=0;i<NSamples;i++){
                 
                 double dN,dNPreEq,dNHydro, test;
-                CharmRates_gg::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro, test);
+                CharmRates_gg::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ,dN,dNPreEq,dNHydro, test);
                 dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro; testo+=test;
                 
 

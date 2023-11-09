@@ -20,7 +20,7 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_gg_mQ1.5_qSupp0_NSamples1000000_QMin3_QMax12_etaovers0.16.txt");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_PreEq_mQ1.5_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.16.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
@@ -44,8 +44,8 @@ int main() {
   	  }
      }
       while(j<67){
- 	      y[j] = all[j*5];
- 	      Charm[j] = all[j*5+2];
+ 	      y[j] = all[j*2];
+ 	      Charm[j] = all[j*2+1];
  	      j++;
 	      }
 		
@@ -73,7 +73,7 @@ int main() {
   	  }
      }
       while(k<67){
- 	      Dilepton[k] = all[k*5+2];
+ 	      Dilepton[k] = all[k*5+3];
  	      k++;
 	      }
       for(int h = 0; h<67;h++){

@@ -102,14 +102,14 @@ int main(int argc, char* argv[]) {
 		l++;}
  
  // COLLISION PARAMETERS //
-    double EtaOverS=0.32; double Area=110;
+    double EtaOverS=0.32; double Area=110; double MQ=1.5;
     
-  	 
+    CommandlineArguments.Getval("M",MQ); 
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
     CommandlineArguments.Getval("Q",QUARK_SUPPRESSION);
     
-    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << std::endl;
+    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION <<  " Quark mass " << MQ << std::endl;
     
     
     // DILEPTON PARAMTERS //
@@ -167,7 +167,7 @@ int main(int argc, char* argv[]) {
                     for(int i=0;i<NSamples;i++){
                           
         		  double dN, dNPreEq, dNHydro, test, test2, test3;    
-                      CharmRates_qq::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS, dN, dNPreEq, dNHydro, test, test2, test3);
+                      CharmRates_qq::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS, MQ, dN, dNPreEq, dNHydro, test, test2, test3);
         		  dNlldY[h]+=dN; dNlldYPreEq[h]+=dNPreEq; dNlldYHydro[h]+=dNHydro;nombre+=test2;
  //       		  if(test==1){
  //       		  	cout << "cosTheta" << " " << test << " " << endl;}
