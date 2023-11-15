@@ -60,17 +60,16 @@ int main(int argc, char* argv[]) {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNdy.csv");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNchdeta_A_Npart_midrapidity_5points.csv");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[34];
-      double dNdy[34];
-      double ytot[67];
-      double dNdytot[67];
+      double Npart[5];
+      double A[5];
+      double dNchdeta[5];
       int j = 0;
-      int l=0;
+
 
   
   
@@ -87,22 +86,15 @@ int main(int argc, char* argv[]) {
   		  counter++;
   	  }
      }
-      while(j<34){
- 	      y[j] = all[j*8];
- 	      dNdy[j] = all[j*8+3];
- 	      ytot[2*j]=y[j];
- 	      dNdytot[2*j]=dNdy[j];
+      while(j<5){
+ 	      Npart[j] = all[j*3];
+ 	      A[j]=all[j*3+1];
+ 	      dNchdeta[j] = 1.161*all[j*3+2];
  	      j++;
 	      }
-	while(l+1 < 34){
-		double yi = (y[l]+y[l+1])/2.0;
-		double dNdyi =(dNdy[l]+dNdy[l+1])/2.0;
-		ytot[2*l+1]= yi;
-		dNdytot[2*l+1]=dNdyi;
-		l++;}
  
  // COLLISION PARAMETERS //
-    double EtaOverS=0.16; double Area=110; double MQ=1.5;
+    double EtaOverS=0.32; double Area=110; double MQ=1.5;
     
     CommandlineArguments.Getval("M",MQ);
     CommandlineArguments.Getval("etas",EtaOverS);
@@ -149,25 +141,27 @@ int main(int argc, char* argv[]) {
                  std::cout << "#1-y 2--dNch/deta 5-dN/dY [GeV-1] 3--dN_{PreEq}/dY [GeV-1] 3--dN_{Hydro}/dY [GeV-1]" << std::endl;
         //    
     
-                     double dNlldY[67];
-                     double dNlldYPreEq[67];
-                     double dNlldYHydro[67];
+                     double dNlldY[11];
+                     double dNlldYPreEq[11];
+                     double dNlldYHydro[11];
                      double nombre = 0;
+                     double yQ = 0;
     
-    	         for (int ii =0; ii<67; ii++){
+    	         for (int ii =0; ii<5; ii++){
    		        dNlldY[ii]=0;
     		        dNlldYPreEq[ii]=0;
    		        dNlldYHydro[ii]=0;}
   		        
-   		   for(int h=0; h<67;h++){ 
-    		        double yQ = ytot[h];
-    		        double dNchdEta = dNdytot[h];
-   		    cout << yQ << " " << dNchdEta << " ";
+   		   for(int h=0; h<5;h++){ 
+    		        double Np = Npart[h];
+    		        double Ar=A[h];
+    		        double dNchdEta = dNchdeta[h];
+   		    cout << Np << " " << Ar << " " << dNchdEta << " ";
              
                     for(int i=0;i<NSamples;i++){
                           
         		  double dN, dNPreEq, dNHydro, test, test2, test3;    
-                      CharmRates_gg::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ, dN, dNPreEq, dNHydro, test, test2, test3);
+                      CharmRates_gg::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Ar,EtaOverS,MQ, dN, dNPreEq, dNHydro, test, test2, test3);
         		  dNlldY[h]+=dN; dNlldYPreEq[h]+=dNPreEq; dNlldYHydro[h]+=dNHydro;nombre+=test2;
  //       		  if(test==1){
  //       		  	cout << "cosTheta" << " " << test << " " << endl;}
