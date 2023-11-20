@@ -39,6 +39,7 @@ double eNEq(double T,double qSupp){
     return eGlEq(T)+qSupp*eQuEq(T);
 }
 
+
 // STANDARD RANDOM NUMBER GENERATOR //
 double rng(){
     return drand48();
@@ -46,43 +47,40 @@ double rng(){
 
 #include "HydroAttractor.cpp"
 #include "PhaseSpaceDistribution.cpp"
-#include "CharmRates_qq.cpp"
 #include "CharmRates_gg.cpp"
-
+#include "CharmRates_qq.cpp"
 
 // COMMANDLINE OPTIONS //
 #include "IO/cfile.c"
 
 int main(int argc, char* argv[]) {
-    
-    // SET COMMANDLINE ARGUMENTS //
     Konfig CommandlineArguments(argc,argv);
-    
-    // COLLISION PARAMETERS //
-    double EtaOverS=0.16 ; double Area=110;double MQ=1.5;
+ 
+ // COLLISION PARAMETERS //
+    double EtaOverS=0.16; double Area=110; double MQ=1.5;
     
     CommandlineArguments.Getval("M",MQ);
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
     CommandlineArguments.Getval("Q",QUARK_SUPPRESSION);
     
-    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION <<  " Quark mass " << MQ << std::endl;
+    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << " Quark mass " << MQ << std::endl;
     
     
     // DILEPTON PARAMTERS //
-    double QMin=3.001; double QMax=8;
+    double QMin=3; double QMax=12;
 
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
     
-    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=40.0;
+    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=1;
     
     CommandlineArguments.Getval("qTMin",qTMin);
     CommandlineArguments.Getval("qTMax",qTMax);
     CommandlineArguments.Getval("TauMin",TauMin);
     CommandlineArguments.Getval("TauMax",TauMax);
     
-    std::cerr << "#KINEMATIC CUTS ARE qT=" << qTMin << " - " << qTMax << " AND  tau=" << TauMin << "-" << TauMax << " fm" << std::endl;
+    std::cerr << "#KINEMATIC CUTS ARE qT=" << qTMin << " - " << qTMax << " tau=" << TauMin << "-" << TauMax << " fm" << " Q=" << QMin << "-" << QMax << std::endl;
     
     
     // MONTE CARLO SAMPLING //
@@ -95,47 +93,49 @@ int main(int argc, char* argv[]) {
     // SETUP INTERPOLATORS FOR HYDRO ATTRACTORS //
     HydroAttractor::Setup();
     
-    // CALCULATE DILEPTON PRODUCTION -- dN/dQdyQ //
-        int NQ=300; double yQ=0; double dNchdEta = 2240;
+    
+  // CALCULATE DILEPTON PRODUCTION -- dN/dQdyQ //
+        int Ntau=1000; double yQ=2.0; double dNchdEta = 1900;
         
-        CommandlineArguments.Getval("NQ",NQ);
+        CommandlineArguments.Getval("Ntau",Ntau);
         CommandlineArguments.Getval("yQ",yQ);
         
-        std::cerr << "#CALCULATING FOR Q=" << QMin << " - " << QMax << " IN " << NQ << " BINS AT yQ=" <<  yQ  << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
+        std::cerr << "#CALCULATING FOR Q=" << QMin << " - " << QMax << " IN " << Ntau << " BINS AT yQ=" <<  yQ  << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
     
         // WRITE HEADER //
         std::cout << "#1-Q [GeV] 2--dN/dQdY [GeV-1] 3--dN_{PreEq}/dQdY [GeV-1] 3--dN_{Hydro}/dQdY [GeV-1]" << std::endl;
         
-        for(int iQ=0;iQ<NQ;iQ++){
+        for(int itau=0;itau<Ntau;itau++){
     
-            double Q=QMin+iQ*(QMax-QMin)/double(NQ-1);
+            double Tau=TauMin+itau*(TauMax-TauMin)/double(Ntau-1);
     //	cout << "Q : " << Q << endl;
     
             double dNlldQdY=0.0;
             double dNlldQdYPreEq=0.0;
             double dNlldQdYHydro=0.0;
-            double testo = 0.0;
 
             for(int i=0;i<NSamples;i++){
                 
-                double dN,dNPreEq,dNHydro, test;
-                CharmRates_gg::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ,dN,dNPreEq,dNHydro, test);
-                dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro; testo+=test;
+                double dN,dNPreEq,dNHydro;
+                CharmRates_gg::SampledNdtaudy(QMin,QMax,qTMin,qTMax,TauMin,Tau,yQ,dNchdEta,Area,EtaOverS,MQ,dN,dNPreEq,dNHydro);
+                dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro;
                 
 
             }
             dNlldQdY/=double(NSamples);
             dNlldQdYPreEq/=double(NSamples);
             dNlldQdYHydro/=double(NSamples);
-            testo/=double(NSamples);
-            
 
     
     
-            std::cout << Q  << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro ;
+            std::cout << Tau  << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro ;
 
     		cout << endl;
         }
-         return 0;
+     
+
+ // EXIT //
+    return 0;
 }
-   
+    
+    
