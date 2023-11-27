@@ -94,8 +94,9 @@ int main(int argc, char* argv[]) {
 	      }
  
  // COLLISION PARAMETERS //
-    double EtaOverS=0.32; double Area=110; double MQ=1.5;
+    double EtaOverS=0.32; double Area=110; double MQ=1.5;double alphas=0.3;
     
+    CommandlineArguments.Getval("alphas",alphas);
     CommandlineArguments.Getval("M",MQ);
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
@@ -161,7 +162,7 @@ int main(int argc, char* argv[]) {
                     for(int i=0;i<NSamples;i++){
                           
         		  double dN, dNPreEq, dNHydro, test, test2, test3;    
-                      CharmRates_gg::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Ar,EtaOverS,MQ, dN, dNPreEq, dNHydro, test, test2, test3);
+                      CharmRates_gg::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Ar,EtaOverS,MQ,alphas, dN, dNPreEq, dNHydro, test, test2, test3);
         		  dNlldY[h]+=dN; dNlldYPreEq[h]+=dNPreEq; dNlldYHydro[h]+=dNHydro;nombre+=test2;
  //       		  if(test==1){
  //       		  	cout << "cosTheta" << " " << test << " " << endl;}

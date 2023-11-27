@@ -60,15 +60,15 @@ int main(int argc, char* argv[]) {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNdy.csv");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNchdy.csv");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[34];
-      double dNdy[34];
-      double ytot[67];
-      double dNdytot[67];
+      double y[40];
+      double dNdy[40];
+      double ytot[79];
+      double dNdytot[79];
       int j = 0;
       int l=0;
 
@@ -87,14 +87,14 @@ int main(int argc, char* argv[]) {
   		  counter++;
   	  }
      }
-      while(j<34){
+      while(j<40){
  	      y[j] = all[j*8];
  	      dNdy[j] = all[j*8+3];
  	      ytot[2*j]=y[j];
  	      dNdytot[2*j]=dNdy[j];
  	      j++;
 	      }
-	while(l+1 < 34){
+	while(l+1 < 40){
 		double yi = (y[l]+y[l+1])/2.0;
 		double dNdyi =(dNdy[l]+dNdy[l+1])/2.0;
 		ytot[2*l+1]= yi;
@@ -102,18 +102,19 @@ int main(int argc, char* argv[]) {
 		l++;}
  
  // COLLISION PARAMETERS //
-    double EtaOverS=0.16; double Area=110; double MQ=1.5;
+    double EtaOverS=0.16; double Area=110; double MQ=1.5; double alphas=0.3;
     
+    CommandlineArguments.Getval("alphas",alphas);
     CommandlineArguments.Getval("M",MQ);
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
     CommandlineArguments.Getval("Q",QUARK_SUPPRESSION);
     
-    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << " Quark mass " << MQ << std::endl;
+    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << " Quark mass " << MQ << " alphas " << alphas << std::endl;
     
     
     // DILEPTON PARAMTERS //
-    double QMin=3; double QMax=12;
+    double QMin=2*MQ; double QMax=8;
 
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
@@ -149,17 +150,17 @@ int main(int argc, char* argv[]) {
                  std::cout << "#1-y 2--dNch/deta 5-dN/dY [GeV-1] 3--dN_{PreEq}/dY [GeV-1] 3--dN_{Hydro}/dY [GeV-1]" << std::endl;
         //    
     
-                     double dNlldY[67];
-                     double dNlldYPreEq[67];
-                     double dNlldYHydro[67];
+                     double dNlldY[79];
+                     double dNlldYPreEq[79];
+                     double dNlldYHydro[79];
                      double nombre = 0;
     
-    	         for (int ii =0; ii<67; ii++){
+    	         for (int ii =0; ii<79; ii++){
    		        dNlldY[ii]=0;
     		        dNlldYPreEq[ii]=0;
    		        dNlldYHydro[ii]=0;}
   		        
-   		   for(int h=0; h<67;h++){ 
+   		   for(int h=0; h<79;h++){ 
     		        double yQ = ytot[h];
     		        double dNchdEta = dNdytot[h];
    		    cout << yQ << " " << dNchdEta << " ";
@@ -167,7 +168,7 @@ int main(int argc, char* argv[]) {
                     for(int i=0;i<NSamples;i++){
                           
         		  double dN, dNPreEq, dNHydro, test, test2, test3;    
-                      CharmRates_gg::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ, dN, dNPreEq, dNHydro, test, test2, test3);
+                      CharmRates_gg::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ,alphas, dN, dNPreEq, dNHydro, test, test2, test3);
         		  dNlldY[h]+=dN; dNlldYPreEq[h]+=dNPreEq; dNlldYHydro[h]+=dNHydro;nombre+=test2;
  //       		  if(test==1){
  //       		  	cout << "cosTheta" << " " << test << " " << endl;}

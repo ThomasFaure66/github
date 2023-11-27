@@ -59,8 +59,9 @@ int main(int argc, char* argv[]) {
     Konfig CommandlineArguments(argc,argv);
     
     // COLLISION PARAMETERS //
-    double EtaOverS=0.32 ; double Area=110;double MQ=1.5;
+    double EtaOverS=0.32 ; double Area=110;double MQ=1.5;double alphas=0.3;
     
+    CommandlineArguments.Getval("alphas",alphas);
     CommandlineArguments.Getval("M",MQ);
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
@@ -119,7 +120,7 @@ int main(int argc, char* argv[]) {
             for(int i=0;i<NSamples;i++){
                 
                 double dN,dNPreEq,dNHydro, test;
-                CharmRates_gg::SampledNdqTdy(QMin, QMax,qT, TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ,dN,dNPreEq,dNHydro, test);
+                CharmRates_gg::SampledNdqTdy(QMin, QMax,qT, TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ,alphas,dN,dNPreEq,dNHydro, test);
                 dNlldqTdY+=dN; dNlldqTdYPreEq+=dNPreEq; dNlldqTdYHydro+=dNHydro; testo+=test;
                 
 

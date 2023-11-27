@@ -3,7 +3,7 @@
 namespace CharmRates_gg{
     
     // NON-EQUILIBIRIUM CURRENT-CURRENT CORRELATION FUNCTION -- yQ IS PSEUDORPAIDITY OF CHARM/ANTICHARM PAIR //
-    void SampleTracePi(double Q, double q0,double qT,double PhiQ, double yQ,double EtaX,double Xi,double Teff,double qSupp,double MQ, double &sampletrace, double &sonde1, double &sonde2){
+    void SampleTracePi(double Q, double q0,double qT,double PhiQ, double yQ,double EtaX,double Xi,double Teff,double qSupp,double MQ, double alphas, double &sampletrace, double &sonde1, double &sonde2){
         
         // SET JACOBIAN TO UNITY //
         double Jacobian=1.0;
@@ -77,7 +77,6 @@ namespace CharmRates_gg{
         double m = MQ;
         //double E = pAbs+sqrt(pAbs*pAbs+qAbs*qAbs-2*pAbs*qAbs*CosThetaPQ);
         double v = sqrt(1.0-(4.0*m*m)/(Q*Q));
-        double alphas  = 0.3;
         double sigma=((M_PI*alphas*alphas)/(2.0*Q*Q))*(((11.0/4.0)-(3.0/2.0)*v*v+(1.0/12.0)*v*v*v*v)*atanh(v)-(v/24.0)*(59.0-31.0*v*v));
 
         // GET PHASE SPACE DISTRIBUTION //
@@ -92,7 +91,7 @@ namespace CharmRates_gg{
     
     
     // SAMPLE DILPETON PRODUCTION -- QSqr INVARIANT MASS SQUARE, qT TRANSVERSE MOMENTUM , EtaQ RAPIDITY OF CHARM/ANTICHARM PAIR //
-    void SampledNdQdy(double QSqr,double qTMin,double qTMax,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double MQ, double &dN,double &dNPreEq,double &dNHydro, double &test){
+    void SampledNdQdy(double QSqr,double qTMin,double qTMax,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro, double &test){
     
         
         // SAMPLE INTEGRATION POINT //
@@ -135,7 +134,7 @@ namespace CharmRates_gg{
         // SAMPLE CHARM/ANTICHARM PRODUCTION //
         
         double sampletrace, sonde1, sonde2;
-        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,sampletrace, sonde1, sonde2);
+        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas,sampletrace, sonde1, sonde2);
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
         double dNlld4xd4Q=256.0*PreFactor*sampletrace;
         // GET PRODUCTION YIELD //
@@ -155,7 +154,7 @@ namespace CharmRates_gg{
     }
   
     // SAMPLE DILPETON PRODUCTION -- Q INVARIANT MASS, qT TRANSVERSE MOMENTUM , EtaQ RAPIDITY OF DILEPTON PAIR //
-    void SampledNdy(double QMin,double QMax,double qTMin,double qTMax,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas, double MQ, double &dN,double &dNPreEq,double &dNHydro, double &test,  double &test2, double &test3){
+    void SampledNdy(double QMin,double QMax,double qTMin,double qTMax,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas, double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro, double &test,  double &test2, double &test3){
         
         // SAMPLE INTEGRATION POINT //
         double Jacobian=1.0;
@@ -197,7 +196,7 @@ namespace CharmRates_gg{
         // SAMPLE CHARM/ANTICHARM PRODUCTION //
         
         double sampletrace, sonde1, sonde2;
-        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ, sampletrace, sonde1, sonde2);
+        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas,sampletrace, sonde1, sonde2);
         
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
         double dNlld4xd4Q=256.0*PreFactor*sampletrace;
@@ -219,7 +218,7 @@ namespace CharmRates_gg{
         
     }
     
-    void SampledNdtaudy(double QMin,double QMax,double qTMin,double qTMax,double TauMin, double TauMax,double EtaQ,double dNchdEta,double Area,double etas, double MQ, double &dN,double &dNPreEq,double &dNHydro){
+    void SampledNdtaudy(double QMin,double QMax,double qTMin,double qTMax,double TauMin, double TauMax,double EtaQ,double dNchdEta,double Area,double etas, double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro){
         
         // SAMPLE INTEGRATION POINT //
         double Jacobian=1.0;
@@ -261,7 +260,7 @@ namespace CharmRates_gg{
         // SAMPLE CHARM/ANTICHARM PRODUCTION //
         
         double sampletrace, sonde1, sonde2;
-        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ, sampletrace, sonde1, sonde2);
+        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas, sampletrace, sonde1, sonde2);
         
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
         double dNlld4xd4Q=256.0*PreFactor*sampletrace;
@@ -282,7 +281,7 @@ namespace CharmRates_gg{
     }
       
     // SAMPLE DILPETON PRODUCTION -- QSqr INVARIANT MASS SQUARE, qT TRANSVERSE MOMENTUM , EtaQ RAPIDITY OF DILEPTON PAIR //
-    void SampledNdqTdy(double QMin,double QMax,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double MQ, double &dN,double &dNPreEq,double &dNHydro, double &test){
+    void SampledNdqTdy(double QMin,double QMax,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro, double &test){
         
         // SAMPLE INTEGRATION POINT //
         double Jacobian=1.0;
@@ -322,7 +321,7 @@ namespace CharmRates_gg{
         
         // SAMPLE CHARM/ANTICHARM PRODUCTION //
         double sampletrace, sonde1, sonde2;
-        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,sampletrace, sonde1, sonde2);
+        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas,sampletrace, sonde1, sonde2);
         
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
         double dNlld4xd4Q=256.0*PreFactor*sampletrace;
@@ -344,7 +343,7 @@ namespace CharmRates_gg{
     }
     
     
-    void SampledNdqTdQdy(double Q,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area, double MQ, double &dN,double &dNPreEq,double &dNHydro,double eta_over_s){
+    void SampledNdqTdQdy(double Q,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area, double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro,double eta_over_s){
 
 
         // SET JACOBIAN FOR MONTE-CARLO INTEGRATION //
@@ -384,7 +383,7 @@ namespace CharmRates_gg{
         
         // CALCULATE CHARM/ANTICHARM PRODUCTION //
         double sampletrace, sonde1, sonde2;
-        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ, sampletrace, sonde1, sonde2);
+        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas, sampletrace, sonde1, sonde2);
         
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
         double dNlld4xd4Q=256.0*PreFactor*sampletrace;
