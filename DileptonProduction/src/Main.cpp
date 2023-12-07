@@ -47,7 +47,7 @@ double rng(){
 #include "HydroAttractor.cpp"
 #include "PhaseSpaceDistribution.cpp"
 #include "DileptonRates.cpp"
-
+#include "DileptonRates2.cpp"
 
 // COMMANDLINE OPTIONS //
 #include "IO/cfile.c"
@@ -59,35 +59,47 @@ int main(int argc, char* argv[]) {
    
 
   //  // SAVE DNDY values
-      char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/DileptonProduction/src/dNdy.csv");
-      ifstream dataFile(filexsec);
-      int counter = 0;
-      string line;
-      double all[600];
-      double y[34];
-      double dNdy[34];
-      int j = 0;
-  
-  
-      for(int i = 0; i<600; i++){
-  	    all[i] = 0;
-      }
-      
-      while(getline(dataFile, line)){
-  	  istringstream iss(line);
-  	  string token;
-  	  while(getline(iss, token, ',')){
-  		  double num_float = stod(token);
-  		  all[counter] = num_float;
-  		  counter++;
-  	  }
-      }
-      while(j<34){
-  	      y[j] = all[j*8];
-  	      dNdy[j] = all[j*8+3];
-  	      j++;
-  	      }
+//      char filexsec[6000];
+//      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/DileptonProduction/src/dNdy.csv");
+//      ifstream dataFile(filexsec);
+//      int counter = 0;
+//      string line;
+//      double all[600];
+//      double y[34];
+//      double dNdy[34];
+//      double ytot[67];
+//      double dNdytot[67];
+//      int j = 0;
+//      int l=0;
+//
+//  
+//  
+//     for(int i = 0; i<600; i++){
+// 	    all[i] = 0;
+//      }
+//      
+//      while(getline(dataFile, line)){
+//  	  istringstream iss(line);
+//  	  string token;
+//	  while(getline(iss, token, ',')){
+//		  double num_float = stod(token);
+// 		  all[counter] = num_float;
+//  		  counter++;
+//  	  }
+//     }
+//      while(j<34){
+// 	      y[j] = all[j*8];
+// 	      dNdy[j] = all[j*8+3];
+// 	      ytot[2*j]=y[j];
+// 	      dNdytot[2*j]=dNdy[j];
+// 	      j++;
+//	      }
+//	while(l+1 < 34){
+//		double yi = (y[l]+y[l+1])/2.0;
+//		double dNdyi =(dNdy[l]+dNdy[l+1])/2.0;
+//		ytot[2*l+1]= yi;
+//		dNdytot[2*l+1]=dNdyi;
+//		l++;}
   
 
 //        Plot dNdy
@@ -97,7 +109,7 @@ int main(int argc, char* argv[]) {
 //    
 
     // COLLISION PARAMETERS //
-    double EtaOverS=0.32 ; double Area=110;
+    double EtaOverS=0.32; double Area=110;
     
   	 
     CommandlineArguments.Getval("etas",EtaOverS);
@@ -108,7 +120,7 @@ int main(int argc, char* argv[]) {
     
     
     // DILEPTON PARAMTERS //
-    double QMin=1; double QMax=5.0;
+    double QMin=0; double QMax=8;
 
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
@@ -258,87 +270,83 @@ int main(int argc, char* argv[]) {
 //             
 //  	}
 
-//      // CALCULATE DILEPTON PRODUCTION -- dN/dQdyQ //
-//      int NQ=50; double yQ=2.0; double dNchdEta = 1900;
-//      
-//      CommandlineArguments.Getval("NQ",NQ);
-//      CommandlineArguments.Getval("yQ",yQ);
-//      
-//      std::cerr << "#CALCULATING FOR Q=" << QMin << " - " << QMax << " IN " << NQ << " BINS AT yQ=" <<  yQ  << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
-//  
-//      // WRITE HEADER //
-//      std::cout << "#1-Q [GeV] 2--dN/dQdY [GeV-1] 3--dN_{PreEq}/dQdY [GeV-1] 3--dN_{Hydro}/dQdY [GeV-1]" << std::endl;
-//      
-//      for(int iQ=0;iQ<NQ;iQ++){
-//  
-//          double Q=QMin+iQ*(QMax-QMin)/double(NQ-1);
-//  //	cout << "Q : " << Q << endl;
-//  
-//          double dNlldQdY=0.0;
-//          double dNlldQdYPreEq=0.0;
-//          double dNlldQdYHydro=0.0;
+        // CALCULATE DILEPTON PRODUCTION -- dN/dQdy //
+        int NQ=300; double yQ=2.0; double dNchdEta = 1900;
+        
+        CommandlineArguments.Getval("NQ",NQ);
+        CommandlineArguments.Getval("yQ",yQ);
+        
+        std::cerr << "#CALCULATING FOR Q=" << QMin << " - " << QMax << " IN " << NQ << " BINS AT yQ=" <<  yQ  << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
+    
+        // WRITE HEADER //
+        std::cout << "#1-Q [GeV] 2--dN/dQdY [GeV-1] 3--dN_{PreEq}/dQdY [GeV-1] 3--dN_{Hydro}/dQdY [GeV-1]" << std::endl;
+        
+        for(int iQ=0;iQ<NQ;iQ++){
+    
+            double Q=QMin+iQ*(QMax-QMin)/double(NQ-1);
+    //	cout << "Q : " << Q << endl;
+    
+            double dNlldQdY=0.0;
+            double dNlldQdY2=0.0;
+	
+            for(int i=0;i<NSamples;i++){
+                
+                double dN,dNPreEq,dNHydro;
+                DileptonRates::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro);
+                dNlldQdY+=dN;
+                double dN2,dNPreEq2,dNHydro2;
+                DileptonRates2::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN2,dNPreEq2,dNHydro2);
+                dNlldQdY2+=dN2;
+    
+            }
+            dNlldQdY/=double(NSamples);
+            dNlldQdY2/=double(NSamples);
+
+    
+    
+            std::cout << Q << " " << dNlldQdY << " "  << dNlldQdY2 << std::endl;
+    
+        }
+//
+//
+//              //  CALCULATE DILEPTON PRODUCTION -- dN/dy //
+//             
 //          
-//          for(int i=0;i<NSamples;i++){
+//              //   std::cerr << "#CALCULATING FOR y=" << yMin << " - " << yMax << " IN " << NY << " BINS WITH Q=" <<  QMin  << " - " << QMax << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
+//            
+//             //    WRITE HEADER //
+//                  std::cout << "#1-y 2--dN/dY 3--QMin 4--QMax 5-dN/dQdY [GeV-1] 3--dN_{PreEq}/dQdY [GeV-1] 3--dN_{Hydro}/dQdY [GeV-1]" << std::endl;
+//        //    
+//    
+//                     double dNlldY[67];
+//                     double dNlldYPreEq[67];
+//                     double dNlldYHydro[67];
+//    
+//    	         for (int ii =0; ii<67; ii++){
+//    		        dNlldY[ii]=0;
+//    		        dNlldYPreEq[ii]=0;
+//    		        dNlldYHydro[ii]=0;}
+//    		        
+//    		   for(int h=0; h<67;h++){ 
+//    		        double yQ = ytot[h];
+//    		        double dNchdEta = dNdytot[h];
+//    		    cout << yQ << " " << dNchdEta << " ";
+//                   
+//                     for(int i=0;i<NSamples;i++){
+//                          
+//        		  double dN, dNPreEq, dNHydro;    
+//                      DileptonRates::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS, dN, dNPreEq, dNHydro);
+//        		  dNlldY[h]+=dN; dNlldYPreEq[h]+=dNPreEq; dNlldYHydro[h]+=dNHydro;
+//                      }
+//                     dNlldY[h]/=double(NSamples);
+//        	         dNlldYPreEq[h]/=double(NSamples);
+//        	         dNlldYHydro[h]/=double(NSamples);
+//        	         
 //              
-//              double dN,dNPreEq,dNHydro;
-//              DileptonRates::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro);
-//              dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro;
-//  
-//          }
-//          dNlldQdY/=double(NSamples);
-//          dNlldQdYPreEq/=double(NSamples);
-//          dNlldQdYHydro/=double(NSamples);
-//  
-//  
-//          std::cout << Q << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro << std::endl;
-//  
-//      }
-//
-//
-              //  CALCULATE DILEPTON PRODUCTION -- dN/dy //
-             
-          
-              //   std::cerr << "#CALCULATING FOR y=" << yMin << " - " << yMax << " IN " << NY << " BINS WITH Q=" <<  QMin  << " - " << QMax << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
-            
-             //    WRITE HEADER //
-                  std::cout << "#1-y 2--dN/dY 3--QMin 4--QMax 5-dN/dQdY [GeV-1] 3--dN_{PreEq}/dQdY [GeV-1] 3--dN_{Hydro}/dQdY [GeV-1]" << std::endl;
-        //    
-    
-                     double dNlldY[34];
-                     double dNlldYPreEq[34];
-                     double dNlldYHydro[34];
-    
-    	         for (int ii =0; ii<34; ii++){
-    		        dNlldY[ii]=0;
-    		        dNlldYPreEq[ii]=0;
-    		        dNlldYHydro[ii]=0;}
-    		        
-    		   for(int h=0; h<34;h++){ 
-    		        double yQ = y[h];
-    		        double dNchdEta = dNdy[h];
-    		    cout << yQ << " " << dNchdEta << " ";
-    
-    		 double Q = 1.5;
-    		 for(int l=1; l<5;l++){
-    		 	double Qmin = Q;
-    		 	double Qmax = Q+1;
-                   
-                     for(int i=0;i<NSamples;i++){
-                          
-        		  double dN, dNPreEq, dNHydro;    
-                      DileptonRates::SampledNdy(Qmin,Qmax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS, dN, dNPreEq, dNHydro);
-        		  dNlldY[h]+=dN; dNlldYPreEq[h]+=dNPreEq; dNlldYHydro[h]+=dNHydro;
-                      }
-                     dNlldY[h]/=double(NSamples);
-        	         dNlldYPreEq[h]/=double(NSamples);
-        	         dNlldYHydro[h]/=double(NSamples);
-        	         
-              
-                      std::cout << Qmin << " " << Qmax << " " << " " << dNlldY[h] << " " << dNlldYPreEq[h] << " " << dNlldYHydro[h] << " ";
-              	Q = Q+1;
-                  }
-                  cout << endl;
-                  }
+//                      std::cout << dNlldY[h] << " " << dNlldYPreEq[h] << " " << dNlldYHydro[h] << " ";
+//                  
+//                  cout << endl;
+//                  }
 //      
 //    
 //  // CALCULATE DILEPTON PRODUCTION -- dN/dQdqTdy 

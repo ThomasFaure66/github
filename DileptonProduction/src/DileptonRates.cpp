@@ -238,6 +238,8 @@ namespace DileptonRates{
         dN=Jacobian*dNlld4xd4Q;
         
         // SEPARATE INTO PRE-EQ AND HYDRO //
+        if(isnan(dN)){
+        	dN=0;}
         if(wTilde<1.0){
             dNPreEq=dN; dNHydro=0.0;
         }

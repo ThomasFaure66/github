@@ -85,7 +85,7 @@ namespace CharmRates_gg{
         
         // GET POLARIZATION TENSOR //
         sampletrace=(sigma/qAbs)*Jacobian*fg*fgMP;
-        sonde1 = fg;
+        sonde1 = sigma;
         sonde2 = qAbs;
     }
     

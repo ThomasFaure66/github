@@ -20,13 +20,13 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_PreEq_mQ1.5_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.32.txt");
+      sprintf(filexsec,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/dCharmdy_PreEq_mQ1.5_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.32_alphas0.3552.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[67];
-      double gg[67];
+      double y[79];
+      double PreEq[79];
       int j = 0;
   
   
@@ -43,19 +43,19 @@ int main() {
   		  counter++;
   	  }
      }
-      while(j<67){
+      while(j<79){
  	      y[j] = all[j*2];
- 	      gg[j] = all[j*2+1];
+ 	      PreEq[j] = all[j*2+1];
  	      j++;
 	      }
 		
 	char filexsec2[6000];
-      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/sigmagood.txt");
+      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charmproduction_FONLL_sym.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
       double all2[600];
-      double sigma[33];
+      double sigma[40];
       int k = 0;
   
   
@@ -72,11 +72,11 @@ int main() {
   		  counter2++;
   	  }
      }
-      while(k<33){
- 	      sigma[k] = all[k*2+1];
+      while(k<40){
+ 	      sigma[k] = 0.36*all[k*2+1];
  	      k++;
 	      }
-      for(int h = 0; h<33;h++){
-      	double rapport = 100.0*gg[2*h]/sigma[h];
-      	cout <<y[2*h] << " " << rapport << endl;}
+      for(int h = 0; h<40;h++){
+      	double rapport = 100.0*PreEq[2*h]/sigma[h];
+      	cout << y[2*h] << " " << rapport << endl;}
 		}

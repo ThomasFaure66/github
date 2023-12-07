@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
     Konfig CommandlineArguments(argc,argv);
     
     // COLLISION PARAMETERS //
-    double EtaOverS=0.32 ; double Area=110;double MQ=1.5;double alphas=0.3;
+    double EtaOverS=0.16 ; double Area=110;double MQ=1.5;double alphas=0.3;
     
     CommandlineArguments.Getval("alphas",alphas);
     CommandlineArguments.Getval("M",MQ);
@@ -71,12 +71,12 @@ int main(int argc, char* argv[]) {
     
     
     // DILEPTON PARAMTERS //
-    double QMin=3.00; double QMax=20;
+    double QMin=2*MQ; double QMax=12;
 
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
     
-    double qTMin=0.01; double qTMax=20.0; double TauMin=0.0; double TauMax=40.0;
+    double qTMin=0.0; double qTMax=10.0; double TauMin=0.0; double TauMax=40.0;
     
     CommandlineArguments.Getval("qTMin",qTMin);
     CommandlineArguments.Getval("qTMax",qTMax);
@@ -97,46 +97,33 @@ int main(int argc, char* argv[]) {
     HydroAttractor::Setup();
     
     // CALCULATE DILEPTON PRODUCTION -- dN/dQdyQ //
-        int NqT=300; double yQ=2.0; double dNchdEta = 1900;
+        double yQ=0.0; double dNchdEta = 2240.0;
         
-        CommandlineArguments.Getval("NqT",NqT);
-        CommandlineArguments.Getval("yQ",yQ);
-        
-        std::cerr << "#CALCULATING FOR qT=" << qTMin << " - " << qTMax << " IN " << NqT << " BINS AT yQ=" <<  yQ  << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
+        std::cerr <<  yQ  << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
     
         // WRITE HEADER //
         std::cout << "#1-Q [GeV] 2--dN/dQdY [GeV-1] 3--dN_{PreEq}/dQdY [GeV-1] 3--dN_{Hydro}/dQdY [GeV-1]" << std::endl;
         
-        for(int iqT=0;iqT<NqT;iqT++){
-    
-            double qT=qTMin+iqT*(qTMax-qTMin)/double(NqT-1);
-    //	cout << "Q : " << Q << endl;
-    
-            double dNlldqTdY=0.0;
-            double dNlldqTdYPreEq=0.0;
-            double dNlldqTdYHydro=0.0;
-            double testo = 0.0;
+            double dNlldY=0.0;
+            double dNlldYPreEq=0.0;
+            double dNlldYHydro=0.0;
 
             for(int i=0;i<NSamples;i++){
                 
-                double dN,dNPreEq,dNHydro, test;
-                CharmRates_gg::SampledNdqTdy(QMin, QMax,qT, TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ,alphas,dN,dNPreEq,dNHydro, test);
-                dNlldqTdY+=dN; dNlldqTdYPreEq+=dNPreEq; dNlldqTdYHydro+=dNHydro; testo+=test;
+                double dN, dNPreEq, dNHydro, test, test2, test3;    
+                 CharmRates_gg::SampledNdy(QMin,QMax,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,MQ,alphas, dN, dNPreEq, dNHydro, test, test2, test3);
+        	dNlldY+=dN; dNlldYPreEq+=dNPreEq; dNlldYHydro+=dNHydro;
                 
 
             }
-            dNlldqTdY/=double(NSamples);
-            dNlldqTdYPreEq/=double(NSamples);
-            dNlldqTdYHydro/=double(NSamples);
-            testo/=double(NSamples);
-            
-
-    
-    
-            std::cout << qT << " " << dNlldqTdY << " " << dNlldqTdYPreEq << " " << dNlldqTdYHydro ;
+            dNlldY/=double(NSamples);
+            dNlldYPreEq/=double(NSamples);
+            dNlldYHydro/=double(NSamples);
+           
+            std::cout << yQ << " " << dNchdEta << " " << dNlldY << " " << dNlldYPreEq << " " << dNlldYHydro ;
 
     		cout << endl;
-        }
+        
          return 0;
 }
    

@@ -1,4 +1,11 @@
 #!/bin/bash
-./dNdy_centrality_midrapidity.exe -NSamples 50000000 -etas 0.16 -M 1.5 -Q 0  > dCharmdy_centrality_gg_mQ1.5_qSupp0_NSamples50milliosn_QMin3_QMax12_etaovers0.16.txt;
-./dNdy_centrality_midrapidity.exe -NSamples 50000000 -etas 0.32 -M 1.5 -Q 0  > dCharmdy_centrality_gg_mQ1.5_qSupp0_NSamples50millions_QMin3_QMax12_etaovers0.32.txt;
+./dNdy_y_gg.exe -NSamples 10000000 -etas 0.16 -M 1.4 -Q 0 -alphas 0.2703 > dCharmdy_gg_mQ1.4_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.16_alphas0.2703.txt;
+./dNdy_y_gg.exe -NSamples 10000000 -etas 0.32 -M 1.4 -Q 0 -alphas 0.2703 > dCharmdy_gg_mQ1.4_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.32_alphas0.2703.txt;
+./dNdy_y_gg.exe -NSamples 10000000 -etas 0.16 -M 1.6 -Q 0 -alphas 0.2395 > dCharmdy_gg_mQ1.6_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.16_alphas0.2395.txt;
+./dNdy_y_gg.exe -NSamples 10000000 -etas 0.32 -M 1.6 -Q 0 -alphas 0.2395 > dCharmdy_gg_mQ1.6_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.32_alphas0.2395.txt;
+./dNdy_y_qq.exe -NSamples 10000000 -etas 0.16 -M 1.4 -Q 1 -alphas 0.2703 > dCharmdy_qq_mQ1.4_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.16_alphas0.2703.txt;
+./dNdy_y_qq.exe -NSamples 10000000 -etas 0.32 -M 1.4 -Q 1 -alphas 0.2703 > dCharmdy_qq_mQ1.4_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.32_alphas0.2703.txt;
+./dNdy_y_qq.exe -NSamples 10000000 -etas 0.16 -M 1.6 -Q 1 -alphas 0.2395 > dCharmdy_qq_mQ1.6_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.16_alphas0.2395.txt;
+./dNdy_y_qq.exe -NSamples 10000000 -etas 0.32 -M 1.6 -Q 1 -alphas 0.2395 > dCharmdy_qq_mQ1.6_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.32_alphas0.2395.txt;
+
 
