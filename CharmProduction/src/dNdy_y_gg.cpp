@@ -6,6 +6,7 @@
 #include <cmath>
 #include <ctime>
 #include <cstring>
+#include <string>
 
 #include <gsl/gsl_errno.h>
 #include <gsl/gsl_spline.h>
@@ -58,9 +59,18 @@ int main(int argc, char* argv[]) {
     // SET COMMANDLINE ARGUMENTS //
     Konfig CommandlineArguments(argc,argv);
     
+    
+    
   //  // SAVE DNDY values
+ 
+ 
+      
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNchdy.csv");
+      int a = 0; int b = 5;
+      CommandlineArguments.Getval("a",a);
+      CommandlineArguments.Getval("b",b);
+
+      sprintf(filexsec, "/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNchdy/dNdy_%d_%d.txt", a , b);
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
@@ -81,15 +91,15 @@ int main(int argc, char* argv[]) {
       while(getline(dataFile, line)){
   	  istringstream iss(line);
   	  string token;
-	  while(getline(iss, token, ',')){
+	  while(getline(iss, token, ' ')){
 		  double num_float = stod(token);
  		  all[counter] = num_float;
   		  counter++;
   	  }
      }
       while(j<40){
- 	      y[j] = all[j*8];
- 	      dNdy[j] = all[j*8+3];
+ 	      y[j] = all[j*2];
+ 	      dNdy[j] = all[j*2+1];
  	      ytot[2*j]=y[j];
  	      dNdytot[2*j]=dNdy[j];
  	      j++;
@@ -109,8 +119,8 @@ int main(int argc, char* argv[]) {
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
     CommandlineArguments.Getval("Q",QUARK_SUPPRESSION);
-    
-    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << " Quark mass " << MQ << " alphas " << alphas << std::endl;
+   
+    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << " Quark mass " << MQ << " alphas " << alphas << " Centrality " << a << "-"<< b << "%" << std::endl;
     
     
     // DILEPTON PARAMTERS //
