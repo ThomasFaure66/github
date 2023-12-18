@@ -20,13 +20,13 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/test.txt");
+      sprintf(filexsec,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/centralityaveraged/mQ1.6/dCharmdy_PreEq_mQ1.6_qSupp1_NSamples10million_QMin3.2_QMax12_etaovers0.32_alphas0.2395_centralityaveraged.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[79];
-      double PreEq[79];
+      double y[40];
+      double PreEq[40];
       int j = 0;
   
   
@@ -43,7 +43,7 @@ int main() {
   		  counter++;
   	  }
      }
-      while(j<79){
+      while(j<40){
  	      y[j] = all[j*2];
  	      PreEq[j] = all[j*2+1];
  	      j++;
@@ -73,11 +73,11 @@ int main() {
   	  }
      }
       while(k<40){
-              double exp = 1165.0*pow(10, -6)*4.250326*pow(10,3);
- 	      sigma[k] = 0.36*all2[k*2+1]*(exp/3.11035);
+              double exp = 1165.0*pow(10, -6)*6.28*pow(10,3);
+ 	      sigma[k] = 0.36*all2[k*2+1]*(exp/2.44853);
  	      k++;
 	      }
       for(int h = 0; h<40;h++){
-      	double rapport = 100.0*PreEq[2*h]/sigma[h];
-      	cout << y[2*h] << " " << rapport << " " << sigma[h] << endl;}
+      	double rapport = 100.0*PreEq[h]/sigma[h];
+      	cout << y[h] << " " << rapport << " " << sigma[h] << endl;}
 		}

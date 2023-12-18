@@ -160,17 +160,17 @@ int main(int argc, char* argv[]) {
      //            std::cout << "#1-y 2--dNch/deta 5-dN/dY [GeV-1] 3--dN_{PreEq}/dY [GeV-1] 3--dN_{Hydro}/dY [GeV-1]" << std::endl;
         //    
     
-                     double dNlldY[79];
-                     double dNlldYPreEq[79];
-                     double dNlldYHydro[79];
+                     double dNlldY[40];
+                     double dNlldYPreEq[40];
+                     double dNlldYHydro[40];
                      double nombre = 0;
     
-    	         for (int ii =0; ii<79; ii++){
+    	         for (int ii =0; ii<40; ii++){
    		        dNlldY[ii]=0;
     		        dNlldYPreEq[ii]=0;
    		        dNlldYHydro[ii]=0;}
   		        
-   		   for(int h=0; h<79;h++){ 
+   		   for(int h=0; h<40;h++){ 
     		        double yQ = ytot[h];
     		        double dNchdEta = dNdytot[h];
    		    cout << yQ << " " << dNchdEta << " ";

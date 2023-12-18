@@ -291,7 +291,7 @@ int main(){
 	      }
 
 for (int k = 0; k<40; k++){
-  	    cout << y[k] << " " << (zerocinq[k]+cinqdix[k]+dixvingt[k]+vingttrente[k]+trentequarante[k]+qc[k]+cs[k]+ss[k]+sq[k]+qq[k])/10 << endl;
+  	    cout << y[k] << " " << (1.0/18.0)*zerocinq[k]+(1.0/18.0)*cinqdix[k]+(1.0/9.0)*dixvingt[k]+(1.0/9.0)*vingttrente[k]+(1.0/9.0)*trentequarante[k]+(1.0/9.0)*qc[k]+(1.0/9.0)*cs[k]+(1.0/9.0)*ss[k]+(1.0/9.0)*sq[k]+(1.0/9.0)*qq[k] << endl;
   	         } 
 }
 

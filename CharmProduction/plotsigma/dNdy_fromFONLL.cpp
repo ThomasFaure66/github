@@ -45,7 +45,7 @@ int main(){
      }
       while(j<40){
  	      y[j] = all[j*2];
- 	      dNdy[j] = 20.44*pow(10,3)*all[j*2+1]*pow(10, -12);
+ 	      dNdy[j] = 6.28*pow(10,3)*all[j*2+1]*pow(10, -12);
  	      j++;
 	      }
 

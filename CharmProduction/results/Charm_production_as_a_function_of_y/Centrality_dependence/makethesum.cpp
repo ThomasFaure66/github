@@ -18,7 +18,7 @@ using namespace std;
 int main(){
 
       char filexsec1[6000];
-      sprintf(filexsec1,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples10million_QMin3.2_QMax12_etaovers0.16_alphas0.2395.txt");
+      sprintf(filexsec1,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples10million_QMin2.8_QMax12_etaovers0.16_alphas0.2703.txt");
       ifstream dataFile1(filexsec1);
       int counter1 = 0;
       string line1;
@@ -47,7 +47,7 @@ int main(){
 	      }
 	      
       char filexsec2[6000];
-      sprintf(filexsec2,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality5_10.txt");
+      sprintf(filexsec2,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality5_10.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
@@ -75,7 +75,7 @@ int main(){
 	      
 
       char filexsec3[6000];
-      sprintf(filexsec3,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality10_20.txt");
+      sprintf(filexsec3,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality10_20.txt");
       ifstream dataFile3(filexsec3);
       int counter3 = 0;
       string line3;
@@ -102,7 +102,7 @@ int main(){
 	      }
 
       char filexsec4[6000];
-      sprintf(filexsec4,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality20_30.txt");
+      sprintf(filexsec4,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality20_30.txt");
       ifstream dataFile4(filexsec4);
       int counter4 = 0;
       string line4;
@@ -129,7 +129,7 @@ int main(){
 	      }
 	      
       char filexsec5[6000];
-      sprintf(filexsec5,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality30_40.txt");
+      sprintf(filexsec5,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality30_40.txt");
       ifstream dataFile5(filexsec5);
       int counter5 = 0;
       string line5;
@@ -156,7 +156,7 @@ int main(){
 	      }
 
       char filexsec6[6000];
-      sprintf(filexsec6,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality40_50.txt");
+      sprintf(filexsec6,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality40_50.txt");
       ifstream dataFile6(filexsec6);
       int counter6 = 0;
       string line6;
@@ -183,7 +183,7 @@ int main(){
 	      }
 
       char filexsec7[6000];
-      sprintf(filexsec7,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality50_60.txt");
+      sprintf(filexsec7,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality50_60.txt");
       ifstream dataFile7(filexsec7);
       int counter7 = 0;
       string line7;
@@ -210,7 +210,7 @@ int main(){
 	      }
 
       char filexsec8[6000];
-      sprintf(filexsec8,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality60_70.txt");
+      sprintf(filexsec8,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality60_70.txt");
       ifstream dataFile8(filexsec8);
       int counter8 = 0;
       string line8;
@@ -237,7 +237,7 @@ int main(){
 	      }
 
       char filexsec9[6000];
-      sprintf(filexsec9,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality70_80.txt");
+      sprintf(filexsec9,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality70_80.txt");
       ifstream dataFile9(filexsec9);
       int counter9 = 0;
       string line9;
@@ -264,7 +264,7 @@ int main(){
 	      }
 
       char filexsec[6000];
-      sprintf(filexsec,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/dCharmdy_gg_mQ1.6_qSupp0_NSamples1million_QMin3.2_QMax12_etaovers0.16_alphas0.2395_centrality80_90txt");
+      sprintf(filexsec,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/Centrality_dependence/mQ1.4/dCharmdy_gg_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality80_90txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
@@ -291,7 +291,7 @@ int main(){
 	      }
 
 for (int k = 0; k<79; k++){
-  	    cout << y[k] << " " << (zerocinq[k]+cinqdix[k]+dixvingt[k]+vingttrente[k]+trentequarante[k]+qc[k]+cs[k]+ss[k]+sq[k]+qq[k])/10 << endl;
+  	    cout << y[k] << " " << (1.0/18.0)*zerocinq[k]+(1.0/18.0)*cinqdix[k]+(1.0/9.0)*dixvingt[k]+(1.0/9.0)*vingttrente[k]+(1.0/9.0)*trentequarante[k]+(1.0/9.0)*qc[k]+(1.0/9.0)*cs[k]+(1.0/9.0)*ss[k]+(1.0/9.0)*sq[k]+(1.0/9.0)*qq[k] << endl;
   	         } 
 }
 

@@ -59,8 +59,12 @@ int main(int argc, char* argv[]) {
     Konfig CommandlineArguments(argc,argv);
     
   //  // SAVE DNDY values
-      char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNchdy.csv");
+char filexsec[6000];
+      int a = 0; int b = 5;
+      CommandlineArguments.Getval("a",a);
+      CommandlineArguments.Getval("b",b);
+
+      sprintf(filexsec, "/home/tf275865/Bureau/Stage_code/CharmProduction/src/dNchdy/dNdy_%d_%d.txt", a , b);
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
@@ -81,15 +85,15 @@ int main(int argc, char* argv[]) {
       while(getline(dataFile, line)){
   	  istringstream iss(line);
   	  string token;
-	  while(getline(iss, token, ',')){
+	  while(getline(iss, token, ' ')){
 		  double num_float = stod(token);
  		  all[counter] = num_float;
   		  counter++;
   	  }
      }
       while(j<40){
- 	      y[j] = all[j*8];
- 	      dNdy[j] = all[j*8+3];
+ 	      y[j] = all[j*2];
+ 	      dNdy[j] = all[j*2+1];
  	      ytot[2*j]=y[j];
  	      dNdytot[2*j]=dNdy[j];
  	      j++;
@@ -110,8 +114,7 @@ int main(int argc, char* argv[]) {
     CommandlineArguments.Getval("area",Area);
     CommandlineArguments.Getval("Q",QUARK_SUPPRESSION);
     
-    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION <<  " Quark mass " << MQ << " alphas " << alphas << std::endl;
-    
+    std::cerr << "#CALCULATING CHARM/ANTICHAM PRODUCTION FOR  Area=" << Area << " fm^2 AND Eta/s=" << EtaOverS << " QUARK SUPPRESION " << QUARK_SUPPRESSION << " Quark mass " << MQ << " alphas " << alphas << " Centrality " << a << "-"<< b << "%" << std::endl;
     
     // DILEPTON PARAMTERS //
     double QMin=2*MQ; double QMax=12;
@@ -150,17 +153,17 @@ int main(int argc, char* argv[]) {
           //       std::cout << "#1-y 2--dNch/deta 5-dN/dY [GeV-1] 3--dN_{PreEq}/dY [GeV-1] 3--dN_{Hydro}/dY [GeV-1]" << std::endl;
         //    
     
-                     double dNlldY[79];
-                     double dNlldYPreEq[79];
-                     double dNlldYHydro[79];
+                     double dNlldY[40];
+                     double dNlldYPreEq[40];
+                     double dNlldYHydro[40];
                      double nombre = 0;
     
-    	         for (int ii =0; ii<79; ii++){
+    	         for (int ii =0; ii<40; ii++){
    		        dNlldY[ii]=0;
     		        dNlldYPreEq[ii]=0;
    		        dNlldYHydro[ii]=0;}
   		        
-   		   for(int h=0; h<79;h++){ 
+   		   for(int h=0; h<40;h++){ 
     		        double yQ = ytot[h];
     		        double dNchdEta = dNdytot[h];
    		    cout << yQ << " " << dNchdEta << " ";

@@ -20,7 +20,7 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_qq_mQ1.5_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.16.txt");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/NSamples10million/qq/dCharmdy_qq_mQ1.5_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.16.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
@@ -45,12 +45,12 @@ int main() {
      }
       while(j<67){
  	      y[j] = all[j*5];
- 	      qq[j] = all[j*5+2];
+ 	      qq[j] = 3*all[j*5+2];
  	      j++;
 	      }
 		
 	char filexsec2[6000];
-      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/dCharmdy_gg_mQ1.5_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.16.txt");
+      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/NSamples10million/gg/dCharmdy_gg_mQ1.5_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.16.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
