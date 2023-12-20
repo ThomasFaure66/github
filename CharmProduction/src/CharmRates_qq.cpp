@@ -202,7 +202,7 @@ namespace CharmRates_qq{
         SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas, sampletrace, sonde1, sonde2);
         
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
-        double dNlld4xd4Q=4.0*9.0*PreFactor*sampletrace;
+        double dNlld4xd4Q=4.0*9.0*3*PreFactor*sampletrace;
 
         // GET PRODUCTION YIELD //
         dN=Jacobian*dNlld4xd4Q;
@@ -265,7 +265,7 @@ namespace CharmRates_qq{
         SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ, alphas,sampletrace, sonde1, sonde2);
         
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
-        double dNlld4xd4Q=4.0*9.0*PreFactor*sampletrace;
+        double dNlld4xd4Q=4.0*9.0*3*PreFactor*sampletrace;
 
         // GET PRODUCTION YIELD //
         dN=Jacobian*dNlld4xd4Q;
@@ -326,7 +326,7 @@ namespace CharmRates_qq{
         SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas,sampletrace, sonde1, sonde2);
         
         double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
-        double dNlld4xd4Q=4.0*9.0*PreFactor*sampletrace;
+        double dNlld4xd4Q=4.0*9.0*3*PreFactor*sampletrace;
 
         // GET PRODUCTION YIELD //
          dN=Jacobian*dNlld4xd4Q;
