@@ -150,7 +150,7 @@ char filexsec[6000];
              //   std::cerr << "#CALCULATING FOR y=" << yMin << " - " << yMax << " IN " << NY << " BINS WITH Q=" <<  QMin  << " - " << QMax << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
            
             //    WRITE HEADER //
-          //       std::cout << "#1-y 2--dNch/deta 5-dN/dY [GeV-1] 3--dN_{PreEq}/dY [GeV-1] 3--dN_{Hydro}/dY [GeV-1]" << std::endl;
+            std::cout << "#1--y 2--dNch/dy 3--dN/dY  4--dN_{PreEq}/dY [GeV-1] 5--dN_{Hydro}/dY [GeV-1]" << std::endl;
         //    
     
                      double dNlldY[40];
