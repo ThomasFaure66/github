@@ -20,13 +20,13 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/centralityaveraged/mQ1.4/etaovers0.16/qSupp1/dCharmdy_qq_mQ1.4_qSupp1_NSamples10million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centrality0_5.txt");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/NSamples10million/gg/dCharmdy_gg_mQ1.5_qSupp0_NSamples10million_QMin3_QMax12_etaovers0.32_alphas0.3.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[67];
-      double qq[67];
+      double y[40];
+      double gg[40];
       int j = 0;
   
   
@@ -43,19 +43,19 @@ int main() {
   		  counter++;
   	  }
      }
-      while(j<67){
+      while(j<40){
  	      y[j] = all[j*5];
- 	      qq[j] =3*all[j*5+2];
+ 	      gg[j] = all[j*5+3];
  	      j++;
 	      }
 		
 	char filexsec2[6000];
-      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/NSamples10million/gg/dCharmdy_gg_mQ1.4_qSupp0_NSamples10million_QMin2.8_QMax12_etaovers0.16_alphas0.2703.txt");
+      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/NSamples10million/qq/dCharmdy_qq_mQ1.5_qSupp1_NSamples10million_QMin3_QMax12_etaovers0.32_alphas0.3.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
       double all2[600];
-      double gg[67];
+      double qq[40];
       int k = 0;
   
   
@@ -72,11 +72,11 @@ int main() {
   		  counter2++;
   	  }
      }
-      while(k<67){
- 	      gg[k] = all[k*5+2];
+      while(k<40){
+ 	      qq[k] = 3*all[k*5+3];
  	      k++;
 	      }
       for(int h = 0; h<40;h++){
-      	double rapport = 100*qq[h]/(gg[h]+qq[h]);
-      	cout <<y[h] << " " << rapport << endl;}
+      	double sum = gg[h]+qq[h];
+      	cout << y[h] << " " << sum << endl;}
 		}

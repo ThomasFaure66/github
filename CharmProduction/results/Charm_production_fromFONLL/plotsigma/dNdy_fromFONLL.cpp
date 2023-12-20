@@ -1,7 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <math.h>
+#include<math.h>
 #include <fstream>
 #include <cmath>
 #include <ctime>
@@ -16,19 +16,18 @@
 using namespace std;
 
 int main(){
-	char filexsec[6000];
-	sprintf(filexsec, "/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_fromFONLL/Charmproduction_FONLL_sym.txt");
+
+      char filexsec[6000];
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/plotsigma/FONLL.csv");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
       double y[40];
       double dNdy[40];
-      double ytot[79];
-      double dNdytot[79];
+
       int j = 0;
-      int l=0;
-      int k=0;
+
   
   
      for(int i = 0; i<600; i++){
@@ -38,7 +37,7 @@ int main(){
       while(getline(dataFile, line)){
   	  istringstream iss(line);
   	  string token;
-	  while(getline(iss, token, ' ')){
+	  while(getline(iss, token, ',')){
 		  double num_float = stod(token);
  		  all[counter] = num_float;
   		  counter++;
@@ -46,27 +45,12 @@ int main(){
      }
       while(j<40){
  	      y[j] = all[j*2];
- 	      dNdy[j] = all[j*2+1];
- 	      ytot[2*j]=y[j];
- 	      dNdytot[2*j]=dNdy[j];
+ 	      dNdy[j] = 26.08*pow(10,3)*all[j*2+1]*pow(10, -12);
  	      j++;
 	      }
-	while(l+1 < 40){
-		double yi = (y[l]+y[l+1])/2.0;
-		double dNdyi =(dNdy[l]+dNdy[l+1])/2.0;
-		ytot[2*l+1]= yi;
-		dNdytot[2*l+1]=dNdyi;
-		l++;}
-		
-	while(k<79){
-	cout << ytot[k] << " " << dNdytot[k] << endl;
-	k+=1;
-				}
-				}
-				
-		
-		
-		  
 
-
+for (int k = 0; k<40; k++){
+  	    cout << y[k] << " " << dNdy[k] << endl;
+  	         } 
+}
 
