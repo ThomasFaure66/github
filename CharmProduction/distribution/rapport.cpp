@@ -20,17 +20,17 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/local/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_as_a_function_of_y/centralityaveraged/mQ1.4/dCharmdy_PreEq_mQ1.4_qSupp0_NSamples1million_QMin2.8_QMax12_etaovers0.16_alphas0.2703_centralityaveraged.txt");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/distribution/distribution.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
-      double all[600];
-      double y[40];
-      double PreEq[40];
+      double all[6000];
+      double tau[999];
+      double gg[999];
       int j = 0;
   
   
-     for(int i = 0; i<600; i++){
+     for(int i = 0; i<6000; i++){
  	    all[i] = 0;
       }
       
@@ -43,23 +43,23 @@ int main() {
   		  counter++;
   	  }
      }
-      while(j<40){
- 	      y[j] = all[j*2];
- 	      PreEq[j] = all[j*2+1];
+      while(j<999){
+ 	      tau[j] = all[j*3];
+ 	      gg[j] = all[j*3+1];
  	      j++;
 	      }
 		
 	char filexsec2[6000];
-      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_fromFONLL/Charmproduction_centralityaveraged.txt");
+      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/distribution/distribution.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
-      double all2[600];
-      double sigma[40];
+      double all2[6000];
+      double qq[999];
       int k = 0;
   
   
-     for(int i = 0; i<600; i++){
+     for(int i = 0; i<6000; i++){
  	    all2[i] = 0;
       }
       
@@ -68,16 +68,15 @@ int main() {
   	  string token2;
 	  while(getline(iss2, token2, ' ')){
 		  double num_float2 = stod(token2);
- 		  all2[counter2] = num_float2;
+ 		  all[counter2] = num_float2;
   		  counter2++;
   	  }
      }
-      while(k<40){
-              double exp = 1165.0*pow(10, -6)*26.08*pow(10,3);
- 	      sigma[k] = 0.36*all2[k*2+1]*(exp/10.166);
+      while(k<999){
+ 	      qq[k] = all[k*3+2];
  	      k++;
 	      }
-      for(int h = 0; h<40;h++){
-      	double rapport = 100.0*PreEq[h]/sigma[h];
-      	cout << y[h] << " " << rapport << " " << sigma[h] << endl;}
+      for(int h = 0; h<999;h++){
+      	double rapport = gg[h]/qq[h];
+      	cout <<tau[h] << " " << rapport << endl;}
 		}

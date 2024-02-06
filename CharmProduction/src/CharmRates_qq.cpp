@@ -222,7 +222,7 @@ namespace CharmRates_qq{
     }
       
    // SAMPLE DILPETON PRODUCTION -- QSqr INVARIANT MASS SQUARE, qT TRANSVERSE MOMENTUM , EtaQ RAPIDITY OF DILEPTON PAIR //
-    void SampledNdqTdy(double QMin,double QMax,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double MQ,double alphas,double &dN,double &dNPreEq,double &dNHydro){
+    void SampledNdqTdy(double QMin,double QMax,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double MQ,double alphas,double &dN,double &dNPreEq,double &dNHydro, double &test){
         
         // SAMPLE INTEGRATION POINT //
         double Jacobian=1.0;
@@ -269,6 +269,7 @@ namespace CharmRates_qq{
 
         // GET PRODUCTION YIELD //
         dN=Jacobian*dNlld4xd4Q;
+        test=sonde1;
          if(isnan(dN)){
         	dN=0;}        
         // SEPARATE INTO PRE-EQ AND HYDRO //
