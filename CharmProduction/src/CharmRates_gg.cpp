@@ -218,7 +218,7 @@ namespace CharmRates_gg{
         
     }
     
-    void SampledNdtaudy(double QMin,double QMax,double qTMin,double qTMax,double TauMin, double TauMax,double EtaQ,double dNchdEta,double Area,double etas, double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro){
+    void SampledNdy_tau(double QMin,double QMax,double qTMin,double qTMax,double TauMin, double TauMax,double EtaQ,double dNchdEta,double Area,double etas, double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro){
         
         // SAMPLE INTEGRATION POINT //
         double Jacobian=1.0;
@@ -279,7 +279,66 @@ namespace CharmRates_gg{
         }
         
     }
-      
+     void SampledNdtaudy(double QMin,double QMax,double qTMin,double qTMax,double Tau,double EtaQ,double dNchdEta,double Area,double etas, double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro){
+        
+        // SAMPLE INTEGRATION POINT //
+        double Jacobian=1.0;
+        
+        double EtaMin=-8+EtaQ;
+        double EtaMax=8+EtaQ;
+        double EtaX=EtaMin+(EtaMax-EtaMin)*rng();
+        double qT=qTMin+(qTMax-qTMin)*rng();
+        double PhiQ=2.0*M_PI*rng();
+        
+        double Q=QMin+(QMax-QMin)*rng();
+        double QSqr=Q*Q;
+        
+        // JACOBIAN  -- d^4Q=QdQ dy d^2qT //
+        Jacobian*=2.0*M_PI*(qTMax-qTMin)*(EtaMax-EtaMin)*(QMax-QMin)*qT*Q;
+        
+        // ENERGY AND MOMENTUM OF CHARM/ANTICHARM PAIR //
+        double qZ=std::sqrt(QSqr+qT*qT)*sinh(EtaQ);
+        double qAbs=std::sqrt(qT*qT+(QSqr+qT*qT)*sinh(EtaQ)*sinh(EtaQ));
+        double q0=std::sqrt(QSqr+qAbs*qAbs);
+        
+        // PSEUDO-RAPIDITY OF CHARM/ANTICHARM PAIR //
+        double yQ=atanh(qZ/qAbs);
+        
+        // EVOLUTION TIME //
+        
+        Jacobian*=Tau*Area/(M_HBARC*M_HBARC*M_HBARC*M_HBARC);
+        
+        // GET EVOLUTION OF MACROSCOPIC FIELDS //
+
+        double T,wTilde,e,pL,eQOvereG;
+        HydroAttractor::GetValues(dNchdEta,Area,etas,Tau,T,wTilde,e,pL,eQOvereG);
+        
+        // GET PARAMETERS OF PHASE-SPACE DISTRIBUTION //
+        double Xi,Teff,qSupp;
+        PhaseSpaceDistribution::GetPhaseSpaceDistributionParameters(e,pL,eQOvereG,Xi,Teff,qSupp);
+        
+        // SAMPLE CHARM/ANTICHARM PRODUCTION //
+        
+        double sampletrace, sonde1, sonde2;
+        SampleTracePi(Q,q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp,MQ,alphas, sampletrace, sonde1, sonde2);
+        
+        double PreFactor=QSqr/(64.0*2.0*M_PI*M_PI*M_PI*M_PI*M_PI*M_PI);
+        double dNlld4xd4Q=256.0*PreFactor*sampletrace;
+
+        // GET PRODUCTION YIELD //
+        dN=Jacobian*dNlld4xd4Q;
+        
+         if(isnan(dN)){
+        	dN=0;}
+        // SEPARATE INTO PRE-EQ AND HYDRO //
+        if(wTilde<1.0){
+            dNPreEq=dN; dNHydro=0.0;
+        }
+        else{
+            dNPreEq=0.0; dNHydro=dN;
+        }
+        
+    }
     // SAMPLE DILPETON PRODUCTION -- QSqr INVARIANT MASS SQUARE, qT TRANSVERSE MOMENTUM , EtaQ RAPIDITY OF DILEPTON PAIR //
     void SampledNdqTdy(double QMin,double QMax,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double etas,double MQ, double alphas, double &dN,double &dNPreEq,double &dNHydro, double &test){
         

@@ -7,3 +7,4 @@ all:
 	g++ -std=c++11 -Wall -Wno-stringop-truncation src/dNdQdy_Q_qq.cpp -o dNdQdy_Q_qq.exe -O3 -lgsl -lgslcblas -fno-stack-protector
 	g++ -std=c++11 -Wall -Wno-stringop-truncation src/distribution.cpp -o distribution.exe -O3 -lgsl -lgslcblas -fno-stack-protector
 	g++ -std=c++11 -Wall -Wno-stringop-truncation src/dNdtaudy_tau_gg_not_integrated.cpp -o dNdtaudy_tau_gg_not_integrated_.exe -O3 -lgsl -lgslcblas -fno-stack-protector
+	g++ -std=c++11 -Wall -Wno-stringop-truncation src/dNdy_tau_gg.cpp -o dNdy_tau_gg.exe -O3 -lgsl -lgslcblas -fno-stack-protector

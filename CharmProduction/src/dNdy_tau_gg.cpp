@@ -47,8 +47,8 @@ double rng(){
 
 #include "HydroAttractor.cpp"
 #include "PhaseSpaceDistribution.cpp"
-#include "getphasedistribution.cpp"
-
+#include "CharmRates_gg.cpp"
+#include "CharmRates_qq.cpp"
 
 // COMMANDLINE OPTIONS //
 #include "IO/cfile.c"
@@ -69,12 +69,20 @@ int main(int argc, char* argv[]) {
     
     
     // DILEPTON PARAMTERS //
-    double Q=4;
+    double QMin=3; double QMax=12;
 
-
-    double qT=5; double TauMin=0.0001; double TauMax=0.203+0.0001;
+    CommandlineArguments.Getval("QMin",QMin);
+    CommandlineArguments.Getval("QMax",QMax);
+    
+    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=1;
     
     
+    CommandlineArguments.Getval("qTMin",qTMin);
+    CommandlineArguments.Getval("qTMax",qTMax);
+    CommandlineArguments.Getval("TauMin",TauMin);
+    CommandlineArguments.Getval("TauMax",TauMax);
+    
+    std::cerr << "#KINEMATIC CUTS ARE qT=" << qTMin << " - " << qTMax << " tau=" << TauMin << "-" << TauMax << " fm" << " Q=" << QMin << "-" << QMax << std::endl;
     
     
     // MONTE CARLO SAMPLING //
@@ -89,11 +97,12 @@ int main(int argc, char* argv[]) {
     
     
   // CALCULATE DILEPTON PRODUCTION -- dN/dQdyQ //
-        int Ntau=117; double yQ=2.0; double dNchdEta = 1900;
+        int Ntau=1000; double yQ=2.0; double dNchdEta = 1900;
         
         CommandlineArguments.Getval("Ntau",Ntau);
         CommandlineArguments.Getval("yQ",yQ);
-       
+        
+        std::cerr << "#CALCULATING FOR Q=" << QMin << " - " << QMax << " IN " << Ntau << " BINS AT yQ=" <<  yQ  << " WITH " << NSamples << " SAMPLES PER BIN" << std::endl;
     
         // WRITE HEADER //
         std::cout << "#1-Q [GeV] 2--dN/dQdY [GeV-1] 3--dN_{PreEq}/dQdY [GeV-1] 3--dN_{Hydro}/dQdY [GeV-1]" << std::endl;
@@ -103,24 +112,25 @@ int main(int argc, char* argv[]) {
             double Tau=TauMin+itau*(TauMax-TauMin)/double(Ntau-1);
     //	cout << "Q : " << Q << endl;
     
-            double d1=0.0;
-            double d2=0.0;
-            double d3=0.0;
+            double dNlldQdY=0.0;
+            double dNlldQdYPreEq=0.0;
+            double dNlldQdYHydro=0.0;
 
             for(int i=0;i<NSamples;i++){
                 
-                double fg,temperature, energy;
-                getphasedistribution::phasedistribution(Q,qT,Tau,yQ,dNchdEta,Area,EtaOverS,MQ,alphas,fg,temperature, energy);
-                d1+=fg; d2+=temperature; d3+=energy;
+                double dN,dNPreEq,dNHydro;
+                CharmRates_gg::SampledNdy_tau(QMin,QMax,qTMin,qTMax,TauMin,Tau,yQ,dNchdEta,Area,EtaOverS,MQ,alphas,dN,dNPreEq,dNHydro);
+                dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro;
                 
+
             }
-            d1/=double(NSamples);
-            d2/=double(NSamples);
-            d3/=double(NSamples);
+            dNlldQdY/=double(NSamples);
+            dNlldQdYPreEq/=double(NSamples);
+            dNlldQdYHydro/=double(NSamples);
 
     
     
-            std::cout << Tau  << " " << d1 << " " << d2 << " " << d3 ;
+            std::cout << Tau  << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro ;
 
     		cout << endl;
         }

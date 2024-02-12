@@ -47,7 +47,7 @@ double rng(){
 #include "HydroAttractor.cpp"
 #include "PhaseSpaceDistribution.cpp"
 #include "DileptonRates.cpp"
-#include "DileptonRates2.cpp"
+#include "DileptonRates(changemass).cpp"
 
 // COMMANDLINE OPTIONS //
 #include "IO/cfile.c"

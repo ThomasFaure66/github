@@ -49,7 +49,6 @@ double rng(){
 #include "PhaseSpaceDistribution.cpp"
 #include "CharmRates_gg.cpp"
 #include "CharmRates_qq.cpp"
-#include "getphasedistribution.cpp"
 
 // COMMANDLINE OPTIONS //
 #include "IO/cfile.c"
@@ -75,7 +74,7 @@ int main(int argc, char* argv[]) {
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
     
-    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=1;
+    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=0.203;
     
     
     CommandlineArguments.Getval("qTMin",qTMin);
@@ -98,7 +97,7 @@ int main(int argc, char* argv[]) {
     
     
   // CALCULATE DILEPTON PRODUCTION -- dN/dQdyQ //
-        int Ntau=100; double yQ=2.0; double dNchdEta = 1900;
+        int Ntau=59; double yQ=2.0; double dNchdEta = 1900;
         
         CommandlineArguments.Getval("Ntau",Ntau);
         CommandlineArguments.Getval("yQ",yQ);
@@ -117,10 +116,11 @@ int main(int argc, char* argv[]) {
             double dNlldQdYPreEq=0.0;
             double dNlldQdYHydro=0.0;
 
+
             for(int i=0;i<NSamples;i++){
                 
                 double dN,dNPreEq,dNHydro;
-                getphasedistribution::SampledNdydtau_tau(QMin,QMax,qTMin,qTMax,Tau,yQ,dNchdEta,Area,EtaOverS,MQ,alphas,dN,dNPreEq,dNHydro);
+                CharmRates_gg::SampledNdtaudy(QMin,QMax,qTMin,qTMax,Tau,yQ,dNchdEta,Area,EtaOverS,MQ,alphas,dN,dNPreEq,dNHydro);
                 dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro;
                 
 
@@ -128,6 +128,7 @@ int main(int argc, char* argv[]) {
             dNlldQdY/=double(NSamples);
             dNlldQdYPreEq/=double(NSamples);
             dNlldQdYHydro/=double(NSamples);
+
 
     
     

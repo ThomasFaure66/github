@@ -249,6 +249,59 @@ namespace DileptonRates{
         
     }
     
+    void SampledNdQdtaudy(double Q,double qTMin,double qTMax,double Tau,double EtaQ,double dNchdEta,double Area,double etas,double &dN,double &dNPreEq,double &dNHydro){
+        
+        // SAMPLE INTEGRATION POINT //
+        double Jacobian=1.0;
+        
+        double EtaMin=-8+EtaQ;
+        double EtaMax=8+EtaQ;
+        double EtaX=EtaMin+(EtaMax-EtaMin)*rng();
+        double qT=qTMin+(qTMax-qTMin)*rng();
+        double PhiQ=2.0*M_PI*rng();
+        
+        double QSqr=Q*Q;
+        // JACOBIAN  -- d^4Q=QdQ dy d^2qT //
+        Jacobian*=2.0*M_PI*(qTMax-qTMin)*(EtaMax-EtaMin)*qT*Q;
+        
+        // ENERGY AND MOMENTUM OF DILEPTON PAIR //
+        double qZ=std::sqrt(QSqr+qT*qT)*sinh(EtaQ);
+        double qAbs=std::sqrt(qT*qT+(QSqr+qT*qT)*sinh(EtaQ)*sinh(EtaQ));
+        double q0=std::sqrt(QSqr+qAbs*qAbs);
+        
+        // PSEUDO-RAPIDITY OF DILEPTON PAIR //
+        double yQ=atanh(qZ/qAbs);
+        
+        // EVOLUTION TIME //
+         
+        Jacobian*=Tau*Area/(M_HBARC*M_HBARC*M_HBARC*M_HBARC);
+        
+        // GET EVOLUTION OF MACROSCOPIC FIELDS //
+        double T,wTilde,e,pL,eQOvereG;
+        HydroAttractor::GetValues(dNchdEta,Area,etas,Tau,T,wTilde,e,pL,eQOvereG);
+        
+        // GET PARAMETERS OF PHASE-SPACE DISTRIBUTION //
+        double Xi,Teff,qSupp;
+        PhaseSpaceDistribution::GetPhaseSpaceDistributionParameters(e,pL,eQOvereG,Xi,Teff,qSupp);
+        
+        // SAMPLE DILEPTON PRODUCTION //
+        double PreFactor=alphaEM*alphaEM/(6.0*M_PI*M_PI*M_PI*QSqr)*(1.0+mllSqr/QSqr)*sqrt(1.0-4.0*mllSqr/QSqr)*qFSqrSum;
+        double dNlld4xd4Q=PreFactor*SampleTracePi(q0,qT,PhiQ,yQ,EtaX,Xi,Teff,qSupp);
+        
+        // GET PRODUCTION YIELD //
+        dN=Jacobian*dNlld4xd4Q;
+        
+        // SEPARATE INTO PRE-EQ AND HYDRO //
+        if(isnan(dN)){
+        	dN=0;}
+        if(wTilde<1.0){
+            dNPreEq=dN; dNHydro=0.0;
+        }
+        else{
+            dNPreEq=0.0; dNHydro=dN;
+        }
+        
+    }
     void SampledNdqTdQdy(double Q,double qT,double TauMin,double TauMax,double EtaQ,double dNchdEta,double Area,double &dN,double &dNPreEq,double &dNHydro,double eta_over_s){
 
 
