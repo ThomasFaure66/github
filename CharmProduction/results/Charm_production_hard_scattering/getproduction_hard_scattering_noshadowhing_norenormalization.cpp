@@ -18,13 +18,13 @@ using namespace std;
 int main(){
 
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/plotsigma/sigma_RHIC.csv");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_hard_scattering/cross_section_hard_scattering.csv");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[20];
-      double dNdy[20];
+      double y[40];
+      double dNdy[40];
 
       int j = 0;
 
@@ -37,19 +37,19 @@ int main(){
       while(getline(dataFile, line)){
   	  istringstream iss(line);
   	  string token;
-	  while(getline(iss, token, ' ')){
+	  while(getline(iss, token, ',')){
 		  double num_float = stod(token);
  		  all[counter] = num_float;
   		  counter++;
   	  }
      }
-      while(j<20){
+      while(j<40){
  	      y[j] = all[j*2];
- 	      dNdy[j] = (1068.4/41.3)*pow(10,3)*all[j*2+1]*pow(10, -12);
+ 	      dNdy[j] = 26.08*pow(10,3)*all[j*2+1]*pow(10, -12);
  	      j++;
 	      }
 
-for (int k = 0; k<20; k++){
+for (int k = 0; k<40; k++){
   	    cout << y[k] << " " << dNdy[k] << endl;
   	         } 
 }

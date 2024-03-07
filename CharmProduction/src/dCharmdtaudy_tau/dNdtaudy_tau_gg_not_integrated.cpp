@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
     Konfig CommandlineArguments(argc,argv);
  
  // COLLISION PARAMETERS //
-    double EtaOverS=0.16; double Area=110; double alphas=0.3;
+    double EtaOverS=0.32; double Area=138; double alphas=0.3;
     
     CommandlineArguments.Getval("alphas",alphas);
     CommandlineArguments.Getval("etas",EtaOverS);
@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
     
-    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=0.203;
+    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=3.84;
     
     
     CommandlineArguments.Getval("qTMin",qTMin);
@@ -97,7 +97,7 @@ int main(int argc, char* argv[]) {
     
     
     // CALCULATE INSTANTANEOUS CHARM PRODUCTION -- dN/dtaudy //
-    int Ntau=59; double yQ=0; double dNchdEta = 2240;
+    int Ntau=100; double yQ=0; double dNchdEta = 2240;
         
     CommandlineArguments.Getval("Ntau",Ntau);
     CommandlineArguments.Getval("yQ",yQ);

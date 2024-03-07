@@ -20,13 +20,13 @@ int main() {
     
   //  // SAVE DNDY values
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/plotsigma/results.txt");
+      sprintf(filexsec,"/local/home/tf275865/Bureau/Stage_code/DileptonProduction/inst.txt");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
       double all[600];
-      double y[5];
-      double dNdy[5];
+      double y[101];
+      double gg[101];
       int j = 0;
   
   
@@ -43,19 +43,19 @@ int main() {
   		  counter++;
   	  }
      }
-      while(j<5){
- 	      y[j] = all[j*6];
- 	      dNdy[j] = all[j*6+4];
+      while(j<101){
+ 	      y[j] = all[j*4];
+ 	      gg[j] = all[j*4+1];
  	      j++;
 	      }
 		
 	char filexsec2[6000];
-      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/plotsigma/sigma_centrality_5points.txt");
+      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/DileptonProduction/Instantaneous_dNQdQ_LO_79.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
       double all2[600];
-      double sigma[5];
+      double sigma[101];
       int k = 0;
   
   
@@ -68,15 +68,15 @@ int main() {
   	  string token2;
 	  while(getline(iss2, token2, ' ')){
 		  double num_float2 = stod(token2);
- 		  all2[counter2] = num_float2;
+ 		  all[counter2] = num_float2;
   		  counter2++;
   	  }
      }
-      while(k<5){
- 	      sigma[k] = all2[k*2+1];
+      while(k<101){
+ 	      sigma[k] = all[k*2+1];
  	      k++;
 	      }
-      for(int h = 0; h<5;h++){
-      	double rapport = (sigma[h]+dNdy[h])/(sigma[h]);
-      	cout <<y[h] << " " << rapport << endl;}
+      for(int h = 0; h<101;h++){
+      	double rapport = gg[h]/sigma[h];
+      	cout << y[h] << " " << rapport << endl;}
 		}

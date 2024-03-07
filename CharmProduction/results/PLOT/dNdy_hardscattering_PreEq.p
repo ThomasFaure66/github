@@ -1,12 +1,12 @@
 set xrange [-5:0]
 set yrange [10**-1:2*10**1]
 
-set lmargin 10
+set lmargin 30
 set rmargin 10
-set bmargin 5
+set bmargin 10
 set grid lw 1
 
-set key font ",25"
+set key font ",30"
 set key spacing 1
 set key bottom right
 set key box vertical width -5 height 1
@@ -14,12 +14,11 @@ set key Left
 set key reverse
 
 set format y "10^{%T}"
-set xtics font ",20"
-set ytics font ",20"
+set xtics font ",40" offset 0,-1
+set ytics font ",40"
 set logscale y
-set xlabel "{/:Bold y}" font ",30" offset 0,0
-set ylabel "{/:Bold dN/dy}" font ",30" offset 3,3
-set title "{/:Bold Charm production yields dN/dy in the 0-5% most central 5.02 TeV Pb+Pb collisions}" font ",28"
+set xlabel "{/:Bold y}" font ",40" offset 0,-3
+set ylabel "{/:Bold dN/dy}" font ",40" offset -13,3
 
 
 plot "~/Bureau/Stage_code/CharmProduction/results/Ratio/NSamples10million/Ratio_CharmFONLLRenormalisé/Ratio_CharmFONLLRenorm_mQ1.4_qSupp0_NSamples10million_QMin2.8_QMax12_etaovers0.16_alphas0.2703.txt" u 1:3 lc rgb "green" lw 2 title "Production from hard scattering" w l smooth bezier,\

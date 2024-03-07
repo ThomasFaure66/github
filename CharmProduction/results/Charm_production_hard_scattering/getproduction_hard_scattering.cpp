@@ -21,7 +21,7 @@ int main() {
   //  // SAVE DNDY values
 
 	char filexsec2[6000];
-      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_fromFONLL/Charmproduction_centralityaveraged.txt");
+      sprintf(filexsec2,"/home/tf275865/Bureau/Stage_code/CharmProduction/results/Charm_production_hard_scattering/Charmproduction_hard_scattering_noshadowing_norenormalization.txt");
       ifstream dataFile2(filexsec2);
       int counter2 = 0;
       string line2;
@@ -46,7 +46,7 @@ int main() {
      }
       while(k<40){
               double exp = 1165.0*pow(10, -6)*6.28*pow(10,3);
- 	      sigma[k] = 0.36*all2[k*2+1]*(exp/3.11035);
+ 	      sigma[k] = 0.36*all2[k*2+1]*(exp/10.166);
  	      y[k] = all2[k*2];
  	      k++;
 	      }

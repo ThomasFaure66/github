@@ -15,7 +15,7 @@
 using namespace std;
 double alphaEM=1.0/137.0; double mllSqr=0.0; double qFSqrSum=1.0/9.0+4.0/9.0+1.0/9.0;
 
-int QUARK_SUPPRESSION=1;
+int QUARK_SUPPRESSION=0;
 
 double Nc=3.0;
 double Nf=3.0;
@@ -109,7 +109,7 @@ int main(int argc, char* argv[]) {
 //    
 
     // COLLISION PARAMETERS //
-    double EtaOverS=0.32; double Area=110;
+    double EtaOverS=0.00001; double Area=104;
     
   	 
     CommandlineArguments.Getval("etas",EtaOverS);
@@ -120,7 +120,7 @@ int main(int argc, char* argv[]) {
     
     
     // DILEPTON PARAMTERS //
-    double QMin=0; double QMax=8;
+    double QMin = 0.032; double QMax = 6.432;
 
     CommandlineArguments.Getval("QMin",QMin);
     CommandlineArguments.Getval("QMax",QMax);
@@ -271,7 +271,7 @@ int main(int argc, char* argv[]) {
 //  	}
 
         // CALCULATE DILEPTON PRODUCTION -- dN/dQdy //
-        int NQ=300; double yQ=2.0; double dNchdEta = 1900;
+        int NQ=101; double yQ=0.0; double dNchdEta = 2240.0;
         
         CommandlineArguments.Getval("NQ",NQ);
         CommandlineArguments.Getval("yQ",yQ);
@@ -287,24 +287,25 @@ int main(int argc, char* argv[]) {
     //	cout << "Q : " << Q << endl;
     
             double dNlldQdY=0.0;
-            double dNlldQdY2=0.0;
+            double dNlldQdYPreEq=0.0;
+            double dNlldQdYHydro=0.0;
+            double ideal = (16.0*3.0*alphaEM*alphaEM*qFSqrSum)/(M_PI*M_PI*M_PI)*(2670.0*0.40*0.40)/(Q*Q*Q);
+            
+            
 	
             for(int i=0;i<NSamples;i++){
                 
                 double dN,dNPreEq,dNHydro;
                 DileptonRates::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro);
-                dNlldQdY+=dN;
-                double dN2,dNPreEq2,dNHydro2;
-                DileptonRates2::SampledNdQdy(Q*Q,qTMin,qTMax,TauMin,TauMax,yQ,dNchdEta,Area,EtaOverS,dN2,dNPreEq2,dNHydro2);
-                dNlldQdY2+=dN2;
-    
+                dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro;
+                
             }
             dNlldQdY/=double(NSamples);
-            dNlldQdY2/=double(NSamples);
-
+            dNlldQdYPreEq/=double(NSamples);
+            dNlldQdYHydro/=double(NSamples);
+  
     
-    
-            std::cout << Q << " " << dNlldQdY << " "  << dNlldQdY2 << std::endl;
+            std::cout << Q << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro << " " << ideal << std::endl;
     
         }
 //
@@ -363,7 +364,7 @@ int main(int argc, char* argv[]) {
 //      std::cout << "#1-Q [GeV] 2--qT [GeV] 3 -dN/dqTdQdY [GeV-1] " << std::endl;
 //      
 //      for(int iQ=0;iQ<NQ;iQ++){
-//  
+//  Calculer
 //          double Q=QMin+iQ*(QMax-QMin)/double(NQ-1);
 //  //	cout << "Q : " << Q << endl;
 //  

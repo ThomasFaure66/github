@@ -18,19 +18,19 @@ using namespace std;
 int main(){
 
       char filexsec[6000];
-      sprintf(filexsec,"/home/tf275865/Bureau/test/dsigmadqt.csv");
+      sprintf(filexsec,"/home/tf275865/Bureau/Stage_code/CharmProduction/plotsigma/cross_section_RHIC.csv");
       ifstream dataFile(filexsec);
       int counter = 0;
       string line;
-      double all[6000];
-      double y[900];
-      double dNdy[900];
+      double all[600];
+      double y[20];
+      double dNdy[20];
 
       int j = 0;
 
   
   
-     for(int i = 0; i<6000; i++){
+     for(int i = 0; i<600; i++){
  	    all[i] = 0;
       }
       
@@ -40,17 +40,16 @@ int main(){
 	  while(getline(iss, token, ' ')){
 		  double num_float = stod(token);
  		  all[counter] = num_float;
- 		  cout << all[counter] << " ";
   		  counter++;
   	  }
      }
-      while(j<900){
- 	      y[j] = all[j*3];
- 	      dNdy[j] = 26.98*pow(10,3)*all[j*3+2]*pow(10, -12);
+      while(j<20){
+ 	      y[j] = all[j*2];
+ 	      dNdy[j] = (1068.4/41.3)*pow(10,3)*all[j*2+1]*pow(10, -12);
  	      j++;
 	      }
 
-for (int k = 0; k<900; k++){
+for (int k = 0; k<20; k++){
   	    cout << y[k] << " " << dNdy[k] << endl;
   	         } 
 }

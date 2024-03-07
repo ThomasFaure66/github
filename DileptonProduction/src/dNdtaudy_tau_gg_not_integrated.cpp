@@ -15,7 +15,7 @@
 using namespace std;
 double alphaEM=1.0/137.0; double mllSqr=0.0; double qFSqrSum=1.0/9.0+4.0/9.0+1.0/9.0;
 
-int QUARK_SUPPRESSION=1;
+int QUARK_SUPPRESSION=0;
 
 double Nc=3.0;
 double Nf=3.0;
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     Konfig CommandlineArguments(argc,argv);
  
  // COLLISION PARAMETERS //
-    double EtaOverS=0.32; double Area=110; 
+    double EtaOverS=0.32; double Area=138; 
     
     CommandlineArguments.Getval("etas",EtaOverS);
     CommandlineArguments.Getval("area",Area);
@@ -66,19 +66,14 @@ int main(int argc, char* argv[]) {
     
     
     // DILEPTON PARAMTERS //
-    double Q = 2.0;
-
-    double qTMin=0; double qTMax=10.0; double TauMin=0.0; double TauMax=2;
+    double QMin = 0.032; double QMax = 6.432;
+    double qTMin=0; double qTMax=10.0; double Tau = 3.83;
     
     
     CommandlineArguments.Getval("qTMin",qTMin);
     CommandlineArguments.Getval("qTMax",qTMax);
-    CommandlineArguments.Getval("TauMin",TauMin);
-    CommandlineArguments.Getval("TauMax",TauMax);
     
 
-    
-    
     // MONTE CARLO SAMPLING //
     int NSamples=5120000;
     CommandlineArguments.Getval("NSamples",NSamples);
@@ -91,7 +86,7 @@ int main(int argc, char* argv[]) {
     
     
   // CALCULATE DILEPTON PRODUCTION -- dN/dQdyQ //
-        int Ntau=100; double yQ=0.0; double dNchdEta = 2240.0;
+        int Ntau=101; double yQ=0.0; double dNchdEta = 2240.0;
         
         CommandlineArguments.Getval("Ntau",Ntau);
         CommandlineArguments.Getval("yQ",yQ);
@@ -103,18 +98,19 @@ int main(int argc, char* argv[]) {
         
         for(int itau=0;itau<Ntau;itau++){
     
-            double Tau=TauMin+itau*(TauMax-TauMin)/double(Ntau-1);
+            double Q=QMin+itau*(QMax-QMin)/double(Ntau-1);
     //	cout << "Q : " << Q << endl;
     
             double dNlldQdY=0.0;
             double dNlldQdYPreEq=0.0;
             double dNlldQdYHydro=0.0;
+            
 
 
             for(int i=0;i<NSamples;i++){
                 
                 double dN,dNPreEq,dNHydro;
-                DileptonRates::SampledNdQdtaudy(Q,qTMin,qTMax,Tau,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro);
+                DileptonRates::SampledNdQdtaudy_ideal(Q,qTMin,qTMax,Tau,yQ,dNchdEta,Area,EtaOverS,dN,dNPreEq,dNHydro);
                 dNlldQdY+=dN; dNlldQdYPreEq+=dNPreEq; dNlldQdYHydro+=dNHydro;
                 
 
@@ -122,11 +118,12 @@ int main(int argc, char* argv[]) {
             dNlldQdY/=double(NSamples);
             dNlldQdYPreEq/=double(NSamples);
             dNlldQdYHydro/=double(NSamples);
+           
 
 
     
     
-            std::cout << Tau  << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro ;
+            std::cout << Q  << " " << dNlldQdY << " " << dNlldQdYPreEq << " " << dNlldQdYHydro ;
 
     		cout << endl;
         }

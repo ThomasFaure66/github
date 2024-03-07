@@ -1,10 +1,11 @@
-set multiplot layout 1,2 title "{/:Bold Ratio between charm production in the pre-equilibrium and charm production due to hard scattering} \n  {/:Bold the 0-5% most central 5.02 TeV Pb+Pb collisions} " font ",23"
+set multiplot layout 1,2 
 set xrange [-5:0]
 set yrange [0:35]
 
-set lmargin 15
-set rmargin 10
-set bmargin 5
+set tmargin 4
+set lmargin 20
+set rmargin 5
+set bmargin 10
 set grid lw 1
 
 set xtics font ",20"
